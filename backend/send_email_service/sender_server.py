@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 load_dotenv('../../.env')
 
 HOST = os.getenv("SERVICE_HOST")
-SERVICE_PORT = os.getenv("SERVICE_PORT")
+SERVICE_PORT = os.getenv("SEND_EMAIL_SERVICE_PORT")
 
 from concurrent import futures
 
