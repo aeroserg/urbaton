@@ -1,0 +1,31 @@
+a:not([class]) {
+    text-decoration: none;
+}
+a:not([class]):hover {
+  text-decoration: none;
+}
+
+.header_inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+form {
+  display: flex;
+  flex-direction: column;
+}
+input {
+  padding: 1rem;
+  border: 3px solid #000000;
+  margin: 1rem 0 0 0;
+}
+button[type="submit"] {
+  background-color: aliceblue;
+  border: 3px solid #000000;
+  margin: 1rem 0 0 0;
+  padding: 1rem;
+
+}
+h1, .b_h1 {
+  font-size: 45px;
+}

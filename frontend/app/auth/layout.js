@@ -1,12 +1,13 @@
 import { Inter } from 'next/font/google'
-import './globals.css'
-import './style.css'
+import '../globals.css'
+import '../style.css'
+
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'Лучшая digital школа в России',
-  description: 'Приходите учиться к нам учиться!',
+  title: 'Вход в личный кабинет',
+  description: 'Войдите в личный кабинет лучшей школы России',
 }
 
 export default function RootLayout({ children }) {
