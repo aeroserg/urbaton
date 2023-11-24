@@ -1,9 +1,10 @@
 FROM python:3.8-bullseye
 
-WORKDIR /app
+WORKDIR /send_email
 COPY . .
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 RUN pip install -r requirements.txt
 
-CMD ["python", "-u", "app.py"]
+EXPOSE 9001
+CMD ["python", "-u", "sender_server.py"]

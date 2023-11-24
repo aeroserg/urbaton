@@ -1,8 +1,10 @@
 import os
 from dotenv import load_dotenv
-load_dotenv('../../.env')
+if os.path.exists('../../.env'):
+    load_dotenv('../../.env')
+else:
+    load_dotenv('.env')
 
-HOST = os.getenv("SERVICE_HOST")
 SERVICE_PORT = os.getenv("SEND_EMAIL_SERVICE_PORT")
 
 from concurrent import futures
@@ -44,9 +46,9 @@ class SendEmailServiceServicer(send_email_pb2_grpc.SendEmailServiceServicer):
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     send_email_pb2_grpc.add_SendEmailServiceServicer_to_server(SendEmailServiceServicer(), server)
-    server.add_insecure_port(f'{HOST}:{SERVICE_PORT}')
+    server.add_insecure_port(f'[::]:{SERVICE_PORT}')
     server.start()
-    print(str(datetime.datetime.now()) + f"Server started, listening on {HOST}")
+    print(str(datetime.datetime.now()) + f"Server started, listening on port: {SERVICE_PORT}")
     server.wait_for_termination()
 
 

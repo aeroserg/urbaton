@@ -1,6 +1,9 @@
 import os
 from dotenv import load_dotenv
-load_dotenv('../../.env')
+if os.path.exists('../../.env'):
+    load_dotenv('../../.env')
+else:
+    load_dotenv('.env')
 
 DB_POSTGRES_DBNAME = os.getenv("DB_POSTGRES_DBNAME")
 DB_POSTGRES_USERNAME = os.getenv("DB_POSTGRES_USERNAME")
@@ -18,6 +21,14 @@ from password_generator import password_generator
 from send_greeting_email import send_greeting_email
 from email_template import MESSAGE, SUBJECT
 
+import logging
+
+# Создание объекта логгера
+logger = logging.getLogger(__name__)
+
+# Уровень логирования (может быть logging.DEBUG, logging.INFO, logging.WARNING и так далее)
+logger.setLevel(logging.DEBUG)
+
 app = Flask(__name__)
 cors = CORS(app)
 
@@ -33,6 +44,9 @@ db.init_app(app)
 @app.route('/register_user', methods=['POST'])
 @jwt_required()
 def registration():
+    app.logger.debug('This is a debug message')
+    print(1)
+    # TODO: сделать проверку что выполняющий запрос - школа
     data = request.get_json()
 
     first_name = data.get('first_name')
@@ -41,6 +55,7 @@ def registration():
     phone_number = data.get('phone_number')
     role = data.get('role')
     password = password_generator(10)
+    print(password)
 
     role = Role.query.filter_by(role=role).first()
 
@@ -67,7 +82,8 @@ def registration():
 
         return {'user_created': True, 'email_send_to_user': True}, 200
 
-    except IntegrityError:
+    except IntegrityError as ex:
+        print(ex)
         db.session.rollback()
         return {'success': False, 'email_send_to_user': False}, 400
 
