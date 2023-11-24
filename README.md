@@ -71,3 +71,17 @@
 - response: {
     "user_created": true
 }
+
+### регистрация школы
+- http://localhost/api/register_school
+- POST
+- data: {
+    "name": "Школа горлового ми..ре фа",
+    "email": "losikki@mail.ru",
+    "phone_number": "8888",
+    "address": "сосулькина д.69"
+}
+- response: {
+    "email_send_to_school": true,
+    "school_created": true
+}

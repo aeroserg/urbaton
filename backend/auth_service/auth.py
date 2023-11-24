@@ -11,7 +11,7 @@ DB_POSTGRES_PASSWORD = os.getenv("DB_POSTGRES_PASSWORD")
 DB_POSTGRES_HOST = os.getenv("DB_POSTGRES_HOST")
 DB_POSTGRES_PORT = os.getenv("DB_POSTGRES_PORT")
 
-from backend.common.models import (User, Role, Order, ParentStudentRelationshipOrder, db)
+from backend.common.models import (User, Role, Order, ParentStudentRelationshipOrder, School, UsersSchool, db)
 from flask import Flask, request
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 from sqlalchemy.exc import IntegrityError
@@ -34,13 +34,70 @@ jwt = JWTManager(app)
 db.init_app(app)
 
 
+@app.route('/register_school', methods=['POST'])
+def register_school():
+    data = request.get_json()
+    name = data.get('name')
+    email = data.get('email')
+    phone_number = data.get('phone_number')
+    address = data.get('address')
+
+    try:
+        school = School(
+            name=name,
+            email=email,
+            phone_number=phone_number,
+            address=address
+        )
+
+        db.session.add(school)
+        db.session.commit()
+
+        role = Role.query.filter_by(role='школа').first()
+
+        school_password = password_generator(10)
+        school_login = generate_login(first_name=name, last_name=name)
+
+        user = User(
+            email=email,
+            password=school_password,
+            first_name=name,
+            last_name=name,
+            phone_number=phone_number,
+            role_id=role.id,
+            login=school_login
+        )
+        db.session.add(user)
+        db.session.commit()
+
+        user_school = UsersSchool(school_id=school.id, user_id=user.id)
+        db.session.add(user_school)
+        db.session.commit()
+
+        greeting_success = send_greeting_email(
+            message=MESSAGE.format(login=school_login, password=school_password),
+            subject=SUBJECT,
+            email_address_to=email
+        )
+
+        if not greeting_success:
+            return {'school_created': True, 'email_send_to_school': False}, 200
+
+        return {'school_created': True, 'email_send_to_school': True}, 200
+
+    except IntegrityError as ex:
+        print(ex)
+        db.session.rollback()
+        return {'school_created': False, 'email_send_to_school': False}, 400
+
+
 @app.route('/register_user', methods=['POST'])
 @jwt_required()
 def registration():
     current_user = get_jwt_identity()
     user_role = db.session.query(User.role_id, Role.role).join(Role).filter(User.login == current_user).first()
     if user_role.role != 'школа':
-        return {'user_created': True, 'email_send_to_user': False}, 200
+        return {'user_created': False, 'email_send_to_user': False}, 200
 
     data = request.get_json()
 
@@ -81,7 +138,7 @@ def registration():
     except IntegrityError as ex:
         print(ex)
         db.session.rollback()
-        return {'success': False, 'email_send_to_user': False}, 400
+        return {'user_created': False, 'email_send_to_user': False}, 400
 
 
 @app.route('/login', methods=['POST'])

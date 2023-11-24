@@ -61,8 +61,57 @@ class ParentStudentRelationship(db.Model):
 
 class ParentStudentRelationshipOrder(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    parent_id = db.Column(db.Integer, db.ForeignKey('order.id'), nullable=False)
-    student_id = db.Column(db.Integer, db.ForeignKey('order.id'), nullable=False)
+    parent_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    student_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+
+class Group(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    grade = db.Column(db.Integer, nullable=False)
+    name_group = db.Column(db.String, nullable=False)
+
+
+class StudentGroupRelationship(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    student_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    group_id = db.Column(db.Integer, db.ForeignKey('group.id'), nullable=False)
+
+
+class TutorGroupRelationship(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    student_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    group_id = db.Column(db.Integer, db.ForeignKey('group.id'), nullable=False)
+
+
+class Course(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False)
+
+
+class StudentsCourse(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    student_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=False)
+
+
+class StudentMarks(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    students_course = db.Column(db.Integer, db.ForeignKey('students_course.id'), nullable=False)
+    mark = db.Column(db.Integer, nullable=False)
+
+
+class School(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, unique=True, nullable=False)
+    email = db.Column(db.String(150), nullable=False)
+    phone_number = db.Column(db.String(100), nullable=True)
+    address = db.Column(db.String, nullable=False)
+
+
+class UsersSchool(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    school_id = db.Column(db.Integer, db.ForeignKey('school.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
 
 if __name__ == '__main__':
