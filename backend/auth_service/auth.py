@@ -11,7 +11,7 @@ DB_POSTGRES_PASSWORD = os.getenv("DB_POSTGRES_PASSWORD")
 DB_POSTGRES_HOST = os.getenv("DB_POSTGRES_HOST")
 DB_POSTGRES_PORT = os.getenv("DB_POSTGRES_PORT")
 
-from backend.common.models import (User, Role, db)
+from backend.common.models import (User, Role, Order, ParentStudentRelationshipOrder, db)
 from flask import Flask, request
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 from sqlalchemy.exc import IntegrityError
@@ -119,7 +119,34 @@ def get_header_info():
 
 @app.route('/new_order', methods=['POST'])
 def new_order():
-    pass
+    data = request.get_json()
+
+    parent = data.get('parent')
+    student = data.get('student')
+
+    parent_order = Order(
+        first_name=parent['first_name'],
+        last_name=parent['last_name'],
+        email=parent['email'],
+        phone_number=parent['phone_number']
+    )
+    db.session.add(parent_order)
+    db.session.commit()
+
+    student_order = Order(
+        first_name=student['first_name'],
+        last_name=student['last_name'],
+        email=student['email'],
+        phone_number=student['phone_number']
+    )
+    db.session.add(student_order)
+    db.session.commit()
+
+    parent_student_relationship = ParentStudentRelationshipOrder(parent_id=parent_order.id, student_id=student_order.id)
+    db.session.add(parent_student_relationship)
+    db.session.commit()
+
+    return {'user_created': True}, 200
 
 
 if __name__ == '__main__':

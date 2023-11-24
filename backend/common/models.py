@@ -53,6 +53,18 @@ class Order(db.Model):
     phone_number = db.Column(db.String(100), nullable=True)
 
 
+class ParentStudentRelationship(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    parent_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    student_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+
+class ParentStudentRelationshipOrder(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    parent_id = db.Column(db.Integer, db.ForeignKey('order.id'), nullable=False)
+    student_id = db.Column(db.Integer, db.ForeignKey('order.id'), nullable=False)
+
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()

@@ -39,3 +39,35 @@
     "user_created": true
 }
 - один имейл можно использовать только один раз
+
+### header
+- http://localhost/api/header
+- GET
+- response: {
+    "user_name": user.first_name,
+    "role_id": user.role_id
+}
+
+### добавить заявку 
+- http://localhost/api/new_order
+- POST
+- data: {
+    "parent": 
+    {
+        "first_name": "Бабушка",
+        "last_name": "Пети",
+        "email": "babushka@email.com",
+        "phone_number": "123"
+    },
+    "student": 
+    {
+        "first_name": "Петя",
+        "last_name": "Дудец",
+        "email": "babushka@email.com",
+        "phone_number": "123"
+    }
+    
+}
+- response: {
+    "user_created": true
+}
