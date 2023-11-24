@@ -61,8 +61,8 @@ class ParentStudentRelationship(db.Model):
 
 class ParentStudentRelationshipOrder(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    parent_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    student_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    parent_id = db.Column(db.Integer, db.ForeignKey('order.id'), nullable=False)
+    student_id = db.Column(db.Integer, db.ForeignKey('order.id'), nullable=False)
 
 
 class Group(db.Model):
