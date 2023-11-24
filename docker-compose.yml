@@ -13,6 +13,16 @@ services:
 #    networks:
 #      - service-network
 
+  common_information:
+    build: backend/common_information_service/
+    container_name: common_information
+    ports:
+      - "9002:9002"
+    restart: always
+    volumes:
+      - ./backend:/common_information/backend/
+      - .env:/common_information/.env
+
   send_email:
     build: backend/send_email_service/
     container_name: send_email
