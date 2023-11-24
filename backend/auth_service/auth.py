@@ -103,5 +103,24 @@ def login():
     return {'message': 'Invalid credentials'}, 401
 
 
+@app.route('/header', methods=['GET'])
+@jwt_required()
+def get_header_info():
+    current_user = get_jwt_identity()
+    user = User.query.filter_by(login=current_user).first()
+
+    return (
+        {
+            "user_name": user.first_name,
+            "role_id": user.role_id
+        }
+    ), 200
+
+
+@app.route('/new_order', methods=['POST'])
+def new_order():
+    pass
+
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=9000)

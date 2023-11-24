@@ -45,6 +45,14 @@ class EmailSettings(db.Model):
     email_password = db.Column(db.String, unique=True, nullable=False)
 
 
+class Order(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    first_name = db.Column(db.String(80), nullable=False)
+    last_name = db.Column(db.String(80), nullable=False)
+    email = db.Column(db.String(150), nullable=False)
+    phone_number = db.Column(db.String(100), nullable=True)
+
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
