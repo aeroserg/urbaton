@@ -19,11 +19,13 @@ export default function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const urls = {
-            loginUrl: 'http://localhost:9001/api/login',
+            loginUrl: 'http://localhost/api/auth/login',
         }
+        switch(tokenExists){
+            case false:
                 dataToSend = {
                     "password": passwordValue,
-                    "email": loginValue,            
+                    "login": loginValue,            
                 };
                 try {
                     let res = await fetch(urls.loginUrl, {
@@ -34,14 +36,14 @@ export default function Login() {
                       }
                     });
                     let data = await res.json();
+                    console.log(data)
                     if(data.access_token !== (undefined && null && "")) {
                        
                        setCookie('XToken', `${data.access_token}`, {'max-age': 2592000, 'path': '/', httpOnly: true});
                        setCookie('userRoleId', `${data.role_id}`, {'max-age': 2592000, 'path': '/', httpOnly: true});
 
-                       const token = getCookie('XToken')
-                       console.log(token)
-                       router.push('/lk/')
+                     
+                      router.push('/lk/')
                     } else if(!data.success) {
                         alert('Неправильные логин и/или пароль!');
                         setLoginValue('')
@@ -50,12 +52,19 @@ export default function Login() {
                   } catch (err) {
                     alert(err);
                   }
+                  break;
+                case true:
+                    router.push('/lk/')
+                    break;
+        }
+       
+                
     }
 
   
             return (
                 <>
-                    <Header headerText={"Вход"}/>
+                    <Header headerText={"Вход"} isForLk={false}/>
                         <section>
                             <div className="container-xl">
                                 <div className="b_h1 text-center">
@@ -66,6 +75,7 @@ export default function Login() {
                                     <form onSubmit={handleSubmit} className="login_form" >
                                         <input 
                                         key={1}
+                                        required
                                         className="b_input"
                                         placeholder="Логин"
                                         name="user_login"
@@ -75,6 +85,7 @@ export default function Login() {
                                         onChange={(e) => setLoginValue(e.target.value)}
                                         ></input>
                                           <input 
+                                          required
                                           key={2}
                                         className="b_input"
                                         placeholder="Пароль"
