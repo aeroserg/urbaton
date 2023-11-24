@@ -99,6 +99,9 @@ def registration():
     if user_role.role != 'школа':
         return {'user_created': False, 'email_send_to_user': False}, 200
 
+    admin_user = User.query.filter_by(login=current_user).first()
+    admins_school = UsersSchool.query.filter_by(user_id=admin_user.id).first()
+
     data = request.get_json()
 
     first_name = data.get('first_name')
@@ -122,6 +125,10 @@ def registration():
             login=login
         )
         db.session.add(user)
+        db.session.commit()
+
+        user_school = UsersSchool(school_id=admins_school.id, user_id=user.id)
+        db.session.add(user_school)
         db.session.commit()
 
         greeting_success = send_greeting_email(
