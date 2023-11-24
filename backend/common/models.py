@@ -26,7 +26,8 @@ class User(db.Model):
     first_name = db.Column(db.String(80), nullable=False)
     last_name = db.Column(db.String(80), nullable=False)
     password = db.Column(db.String(100), nullable=False)
-    email = db.Column(db.String(150), unique=True, nullable=False)
+    email = db.Column(db.String(150), nullable=False)
+    login = db.Column(db.String(150), unique=True, nullable=False)
     phone_number = db.Column(db.String(100), nullable=True)
     role_id = db.Column(db.String, db.ForeignKey('role.id'), nullable=False)
 

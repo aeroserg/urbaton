@@ -16,7 +16,7 @@
 - http://localhost/api/login
 - POST 
 - data: {
-    "email": "losikki@mail.ru",
+    "login": "login",
     "password": "TaCmxJBwVq10"
 }
 - response: {

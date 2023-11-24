@@ -17,17 +17,10 @@ from flask_jwt_extended import JWTManager, create_access_token, jwt_required, ge
 from sqlalchemy.exc import IntegrityError
 from flask_cors import CORS
 
+from login_generator import generate_login
 from password_generator import password_generator
 from send_greeting_email import send_greeting_email
 from email_template import MESSAGE, SUBJECT
-
-import logging
-
-# Создание объекта логгера
-logger = logging.getLogger(__name__)
-
-# Уровень логирования (может быть logging.DEBUG, logging.INFO, logging.WARNING и так далее)
-logger.setLevel(logging.DEBUG)
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -44,9 +37,11 @@ db.init_app(app)
 @app.route('/register_user', methods=['POST'])
 @jwt_required()
 def registration():
-    app.logger.debug('This is a debug message')
-    print(1)
-    # TODO: сделать проверку что выполняющий запрос - школа
+    current_user = get_jwt_identity()
+    user_role = db.session.query(User.role_id, Role.role).join(Role).filter(User.login == current_user).first()
+    if user_role.role != 'школа':
+        return {'user_created': True, 'email_send_to_user': False}, 200
+
     data = request.get_json()
 
     first_name = data.get('first_name')
@@ -54,8 +49,8 @@ def registration():
     email = data.get('email')
     phone_number = data.get('phone_number')
     role = data.get('role')
+    login = generate_login(first_name=first_name, last_name=last_name)
     password = password_generator(10)
-    print(password)
 
     role = Role.query.filter_by(role=role).first()
 
@@ -66,13 +61,14 @@ def registration():
             first_name=first_name,
             last_name=last_name,
             phone_number=phone_number,
-            role_id=role.id
+            role_id=role.id,
+            login=login
         )
         db.session.add(user)
         db.session.commit()
 
         greeting_success = send_greeting_email(
-            message=MESSAGE.format(email=email, password=password),
+            message=MESSAGE.format(login=login, password=password),
             subject=SUBJECT,
             email_address_to=email
         )
@@ -93,11 +89,11 @@ def login():
     data = request.get_json()
 
     password = data.get('password')
-    email = data.get('email')
+    login = data.get('login')
 
-    user = User.query.filter_by(email=email, password=password).first()
+    user = User.query.filter_by(login=login, password=password).first()
     if user:
-        access_token = create_access_token(identity=email)
+        access_token = create_access_token(identity=login)
 
         return {
                 'access_token': access_token,
