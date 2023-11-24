@@ -38,6 +38,7 @@ def all_schools():
     for school in schools:
         response["schools"].append(
             {
+                "id": school.id,
                 "name": school.name,
                 "email": school.email,
                 "phone_number": school.phone_number,
