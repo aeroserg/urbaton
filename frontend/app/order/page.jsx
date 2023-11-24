@@ -194,7 +194,7 @@ export default function Order() {
                                         type="text"
                                         onChange={(e) => setChildEmailValue(e.target.value)}
                                         ></input>
-                                        <select id={schoolId} value={selectValue} onChange={(e) => {setSelectedValue(e.target.value); setSchoolId(e.target.attributes.id.value)}} name="select_school" id="select_school">
+                                        <select id={schoolId} value={selectValue} onChange={(e) => {setSelectedValue(e.target.value); setSchoolId(e.target.attributes.id.value)}} name="select_school">
                                             {schoolsData.schools ? schoolsData.schools.map((item) => (
                                                 <option id={item.id} value={item.name} key={item.id}>{item.name}</option>
                                             )) : undefined}
