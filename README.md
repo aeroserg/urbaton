@@ -58,15 +58,17 @@
         "first_name": "Бабушка",
         "last_name": "Пети",
         "email": "babushka@email.com",
-        "phone_number": "123"
-    },
-    "student": 
-    {
-        "first_name": "Петя",
-        "last_name": "Дудец",
-        "email": "babushka@email.com",
-        "phone_number": "123"
-    }
+        "phone_number": "123",
+        "school_id": 1
+      },
+      "student": 
+      {
+          "first_name": "Петя",
+          "last_name": "Дудец",
+          "email": "babushka@email.com",
+          "phone_number": "123",
+          "school_id": 1
+      }
     
 }
 - response: {
@@ -93,6 +95,7 @@
 - response: {
     "schools": [
         {
+            "id": 1,
             "address": "сосулькина д.69",
             "email": "losikki@mail.ru",
             "name": "Школа горлового ми..ре фа",

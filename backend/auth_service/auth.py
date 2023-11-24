@@ -11,7 +11,8 @@ DB_POSTGRES_PASSWORD = os.getenv("DB_POSTGRES_PASSWORD")
 DB_POSTGRES_HOST = os.getenv("DB_POSTGRES_HOST")
 DB_POSTGRES_PORT = os.getenv("DB_POSTGRES_PORT")
 
-from backend.common.models import (User, Role, Order, ParentStudentRelationshipOrder, School, UsersSchool, db)
+from backend.common.models import (User, Role, Order, ParentStudentRelationshipOrder,
+                                   School, UsersSchool, OrderSchoolRelationship, db)
 from flask import Flask, request
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 from sqlalchemy.exc import IntegrityError
@@ -197,6 +198,10 @@ def new_order():
     db.session.add(parent_order)
     db.session.commit()
 
+    parent_order_school = OrderSchoolRelationship(order_id=parent_order.id, school_id=parent['school_id'])
+    db.session.add(parent_order_school)
+    db.session.commit()
+
     student_order = Order(
         first_name=student['first_name'],
         last_name=student['last_name'],
@@ -204,6 +209,10 @@ def new_order():
         phone_number=student['phone_number']
     )
     db.session.add(student_order)
+    db.session.commit()
+
+    parent_order_school = OrderSchoolRelationship(order_id=student_order.id, school_id=parent['school_id'])
+    db.session.add(parent_order_school)
     db.session.commit()
 
     parent_student_relationship = ParentStudentRelationshipOrder(parent_id=parent_order.id, student_id=student_order.id)

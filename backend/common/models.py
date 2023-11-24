@@ -114,6 +114,12 @@ class UsersSchool(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
 
+class OrderSchoolRelationship(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    school_id = db.Column(db.Integer, db.ForeignKey('school.id'), nullable=False)
+    order_id = db.Column(db.Integer, db.ForeignKey('order.id'), nullable=False)
+
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
