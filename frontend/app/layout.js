@@ -1,4 +1,4 @@
-import './globals.css'
+import './globals.min.css'
 import './style.css'
 import { Roboto } from 'next/font/google'
 import { Rubik } from 'next/font/google'
