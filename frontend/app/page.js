@@ -13,7 +13,16 @@ export default function Home() {
     infinite: true,
     slidesToShow: 3,
     speed: 500,
-    
+    responsive: [
+      {
+        breakpoint: 997,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          initialSlide: 1
+        }
+      }
+    ]
   };
   return (
     <>
