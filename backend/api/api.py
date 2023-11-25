@@ -124,7 +124,7 @@ def login():
     password = data.get('password')
     login = data.get('login')
 
-    with grpc.insecure_channel('localhost' + ':' + AUTH_SERVICE_PORT) as channel:
+    with grpc.insecure_channel(AUTH_SERVICE_HOST + ':' + AUTH_SERVICE_PORT) as channel:
         stub = auth_pb2_grpc.AuthServiceStub(channel)
         response = stub.Login(
             auth_pb2.LoginRequest(
@@ -148,7 +148,7 @@ def login():
 def get_header_info():
     current_user = get_jwt_identity()
 
-    with grpc.insecure_channel('localhost' + ':' + AUTH_SERVICE_PORT) as channel:
+    with grpc.insecure_channel(AUTH_SERVICE_HOST + ':' + AUTH_SERVICE_PORT) as channel:
         stub = auth_pb2_grpc.AuthServiceStub(channel)
         response = stub.Header(
             auth_pb2.HeaderRequest(
