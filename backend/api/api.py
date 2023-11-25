@@ -5,8 +5,10 @@ if os.path.exists('../../.env'):
 else:
     load_dotenv('.env')
 
-HOST = os.getenv("AUTH_SERVICE_HOST")
-SERVICE_PORT = os.getenv("AUTH_SERVICE_PORT")
+AUTH_SERVICE_HOST = os.getenv("AUTH_SERVICE_HOST")
+AUTH_SERVICE_PORT = os.getenv("AUTH_SERVICE_PORT")
+COMMON_SERVICE_HOST = os.getenv("COMMON_SERVICE_HOST")
+COMMON_SERVICE_PORT = os.getenv("COMMON_SERVICE_PORT")
 
 from flask import Flask, request
 from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity, create_access_token
@@ -15,6 +17,8 @@ from flask_cors import CORS
 import grpc
 import auth_pb2
 import auth_pb2_grpc
+import common_pb2
+import common_pb2_grpc
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -97,7 +101,7 @@ def registration():
     phone_number = data.get('phone_number')
     role = data.get('role')
 
-    with grpc.insecure_channel(HOST + ':' + SERVICE_PORT) as channel:
+    with grpc.insecure_channel(AUTH_SERVICE_HOST + ':' + AUTH_SERVICE_PORT) as channel:
         stub = auth_pb2_grpc.AuthServiceStub(channel)
         response = stub.RegisterUser(
             auth_pb2.RegisterUserRequest(
@@ -120,7 +124,7 @@ def login():
     password = data.get('password')
     login = data.get('login')
 
-    with grpc.insecure_channel(HOST + ':' + SERVICE_PORT) as channel:
+    with grpc.insecure_channel(AUTH_SERVICE_HOST + ':' + AUTH_SERVICE_PORT) as channel:
         stub = auth_pb2_grpc.AuthServiceStub(channel)
         response = stub.Login(
             auth_pb2.LoginRequest(
@@ -144,7 +148,7 @@ def login():
 def get_header_info():
     current_user = get_jwt_identity()
 
-    with grpc.insecure_channel(HOST + ':' + SERVICE_PORT) as channel:
+    with grpc.insecure_channel(AUTH_SERVICE_HOST + ':' + AUTH_SERVICE_PORT) as channel:
         stub = auth_pb2_grpc.AuthServiceStub(channel)
         response = stub.Header(
             auth_pb2.HeaderRequest(
@@ -200,23 +204,28 @@ def get_header_info():
 #     return {'user_created': True}, 200
 
 
-# @app.route('/all_schools', methods=['GET'])
-# def all_schools():
-#     response = {"schools": []}
-#     schools = School.query.all()
-#
-#     for school in schools:
-#         response["schools"].append(
-#             {
-#                 "id": school.id,
-#                 "name": school.name,
-#                 "email": school.email,
-#                 "phone_number": school.phone_number,
-#                 "address": school.address
-#             }
-#         )
-#
-#     return response, 200
+@app.route('/all_schools', methods=['GET'])
+def all_schools():
+    response = {"schools": []}
+
+    with grpc.insecure_channel(COMMON_SERVICE_HOST + ':' + COMMON_SERVICE_PORT) as channel:
+        stub = common_pb2_grpc.CommonServiceStub(channel)
+        schools = stub.Schools(
+            common_pb2.SchoolsRequest()
+        )
+
+    for school in schools.schools:
+        response["schools"].append(
+            {
+                "id": school.id,
+                "name": school.name,
+                "email": school.email,
+                "phone_number": school.phone_number,
+                "address": school.address
+            }
+        )
+
+    return response, 200
 
 
 if __name__ == '__main__':

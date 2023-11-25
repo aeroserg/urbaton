@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+message School {
+  int32 id = 1;
+  string name = 2;
+  string email = 3;
+  string phone_number = 4;
+  string address = 5;
+}
+
+message SchoolsRequest{}
+
+message SchoolsResponse{
+  repeated School schools = 1;
+}
+
+service CommonService{
+  rpc Schools(SchoolsRequest) returns (SchoolsResponse);
+}

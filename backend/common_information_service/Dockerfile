@@ -6,4 +6,4 @@ COPY . .
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
-CMD ["python", "-u", "common_information.py"]
+CMD ["python", "-u", "common_information_service.py"]
