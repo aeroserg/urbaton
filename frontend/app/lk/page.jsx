@@ -8,11 +8,14 @@ import LkForAdmin from '../components/LkForAdmin'
 import { getCookie } from 'cookies-next';
 import Header from '../components/header';
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
-const Lk = () => {  
-const router = useRouter()
+export default function Lk() {  
+const router = useRouter();
   const role = getCookie('userRoleId')
-  if (getCookie('XToken') === undefined) router.push('/signout');
+  useEffect(() => {
+    if (getCookie('XToken') === undefined) router.push('/signout');
+  },[router])
   console.log(role)
   switch (role) {
     case "abfa64e6-78c7-40de-ab54-bb442554b117":
@@ -42,5 +45,3 @@ const router = useRouter()
     )
     }   
 };
-
-export default Lk;
