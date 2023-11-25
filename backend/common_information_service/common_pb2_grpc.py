@@ -19,12 +19,23 @@ class CommonServiceStub(object):
                 request_serializer=common__pb2.SchoolsRequest.SerializeToString,
                 response_deserializer=common__pb2.SchoolsResponse.FromString,
                 )
+        self.GetClass = channel.unary_unary(
+                '/CommonService/GetClass',
+                request_serializer=common__pb2.GetClassRequest.SerializeToString,
+                response_deserializer=common__pb2.GetClassResponse.FromString,
+                )
 
 
 class CommonServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
 
     def Schools(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetClass(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -37,6 +48,11 @@ def add_CommonServiceServicer_to_server(servicer, server):
                     servicer.Schools,
                     request_deserializer=common__pb2.SchoolsRequest.FromString,
                     response_serializer=common__pb2.SchoolsResponse.SerializeToString,
+            ),
+            'GetClass': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetClass,
+                    request_deserializer=common__pb2.GetClassRequest.FromString,
+                    response_serializer=common__pb2.GetClassResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -62,5 +78,22 @@ class CommonService(object):
         return grpc.experimental.unary_unary(request, target, '/CommonService/Schools',
             common__pb2.SchoolsRequest.SerializeToString,
             common__pb2.SchoolsResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetClass(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/CommonService/GetClass',
+            common__pb2.GetClassRequest.SerializeToString,
+            common__pb2.GetClassResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

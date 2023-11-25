@@ -128,3 +128,18 @@
         }
     ]
 }
+
+### получение списка классов
+- http://localhost/api/classes
+- GET
+- ОБЯЗАТЕЛЬНО JWT ТОКЕН
+- response: {
+    "classes": [
+        {
+            "class_name": "до"
+        },
+        {
+            "class_name": "ре"
+        }
+    ]
+}

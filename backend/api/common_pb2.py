@@ -13,7 +13,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0c\x63ommon.proto\"X\n\x06School\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\r\n\x05\x65mail\x18\x03 \x01(\t\x12\x14\n\x0cphone_number\x18\x04 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x05 \x01(\t\"\x10\n\x0eSchoolsRequest\"+\n\x0fSchoolsResponse\x12\x18\n\x07schools\x18\x01 \x03(\x0b\x32\x07.School2=\n\rCommonService\x12,\n\x07Schools\x12\x0f.SchoolsRequest\x1a\x10.SchoolsResponseb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0c\x63ommon.proto\"X\n\x06School\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\r\n\x05\x65mail\x18\x03 \x01(\t\x12\x14\n\x0cphone_number\x18\x04 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x05 \x01(\t\"\x1b\n\x05\x43lass\x12\x12\n\nclass_name\x18\x01 \x01(\t\"\x10\n\x0eSchoolsRequest\"+\n\x0fSchoolsResponse\x12\x18\n\x07schools\x18\x01 \x03(\x0b\x32\x07.School\"\x11\n\x0fGetClassRequest\"+\n\x10GetClassResponse\x12\x17\n\x07\x63lasses\x18\x01 \x03(\x0b\x32\x06.Class2n\n\rCommonService\x12,\n\x07Schools\x12\x0f.SchoolsRequest\x1a\x10.SchoolsResponse\x12/\n\x08GetClass\x12\x10.GetClassRequest\x1a\x11.GetClassResponseb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -22,10 +22,16 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   DESCRIPTOR._options = None
   _globals['_SCHOOL']._serialized_start=16
   _globals['_SCHOOL']._serialized_end=104
-  _globals['_SCHOOLSREQUEST']._serialized_start=106
-  _globals['_SCHOOLSREQUEST']._serialized_end=122
-  _globals['_SCHOOLSRESPONSE']._serialized_start=124
-  _globals['_SCHOOLSRESPONSE']._serialized_end=167
-  _globals['_COMMONSERVICE']._serialized_start=169
-  _globals['_COMMONSERVICE']._serialized_end=230
+  _globals['_CLASS']._serialized_start=106
+  _globals['_CLASS']._serialized_end=133
+  _globals['_SCHOOLSREQUEST']._serialized_start=135
+  _globals['_SCHOOLSREQUEST']._serialized_end=151
+  _globals['_SCHOOLSRESPONSE']._serialized_start=153
+  _globals['_SCHOOLSRESPONSE']._serialized_end=196
+  _globals['_GETCLASSREQUEST']._serialized_start=198
+  _globals['_GETCLASSREQUEST']._serialized_end=215
+  _globals['_GETCLASSRESPONSE']._serialized_start=217
+  _globals['_GETCLASSRESPONSE']._serialized_end=260
+  _globals['_COMMONSERVICE']._serialized_start=262
+  _globals['_COMMONSERVICE']._serialized_end=372
 # @@protoc_insertion_point(module_scope)

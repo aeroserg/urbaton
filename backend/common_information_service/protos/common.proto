@@ -8,12 +8,23 @@ message School {
   string address = 5;
 }
 
+message Class {
+  string class_name = 1;
+}
+
 message SchoolsRequest{}
 
 message SchoolsResponse{
   repeated School schools = 1;
 }
 
+message GetClassRequest{}
+
+message GetClassResponse{
+  repeated Class classes = 1;
+}
+
 service CommonService{
   rpc Schools(SchoolsRequest) returns (SchoolsResponse);
+  rpc GetClass(GetClassRequest) returns (GetClassResponse);
 }

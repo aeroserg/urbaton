@@ -19,6 +19,12 @@ class School(_message.Message):
     address: str
     def __init__(self, id: _Optional[int] = ..., name: _Optional[str] = ..., email: _Optional[str] = ..., phone_number: _Optional[str] = ..., address: _Optional[str] = ...) -> None: ...
 
+class Class(_message.Message):
+    __slots__ = ["class_name"]
+    CLASS_NAME_FIELD_NUMBER: _ClassVar[int]
+    class_name: str
+    def __init__(self, class_name: _Optional[str] = ...) -> None: ...
+
 class SchoolsRequest(_message.Message):
     __slots__ = []
     def __init__(self) -> None: ...
@@ -28,3 +34,13 @@ class SchoolsResponse(_message.Message):
     SCHOOLS_FIELD_NUMBER: _ClassVar[int]
     schools: _containers.RepeatedCompositeFieldContainer[School]
     def __init__(self, schools: _Optional[_Iterable[_Union[School, _Mapping]]] = ...) -> None: ...
+
+class GetClassRequest(_message.Message):
+    __slots__ = []
+    def __init__(self) -> None: ...
+
+class GetClassResponse(_message.Message):
+    __slots__ = ["classes"]
+    CLASSES_FIELD_NUMBER: _ClassVar[int]
+    classes: _containers.RepeatedCompositeFieldContainer[Class]
+    def __init__(self, classes: _Optional[_Iterable[_Union[Class, _Mapping]]] = ...) -> None: ...

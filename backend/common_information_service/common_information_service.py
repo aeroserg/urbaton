@@ -12,9 +12,9 @@ import datetime
 
 import grpc
 import common_pb2_grpc
-from common_pb2 import School, SchoolsResponse
+from common_pb2 import School, SchoolsResponse, GetClassResponse, Class
 
-from work_with_db import get_schools
+from work_with_db import get_schools, get_classes
 
 
 class CommonServiceServicer(common_pb2_grpc.CommonServiceServicer):
@@ -35,6 +35,20 @@ class CommonServiceServicer(common_pb2_grpc.CommonServiceServicer):
             )
 
         return SchoolsResponse(schools=response)
+
+    def GetClass(self, request, context):
+        classes = get_classes()
+
+        response = []
+
+        for class_name in classes:
+            response.append(
+                Class(
+                    class_name=class_name.id
+                )
+            )
+
+        return GetClassResponse(classes=response)
 
 
 def serve():

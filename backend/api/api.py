@@ -254,5 +254,26 @@ def get_orders():
     return response, 200
 
 
+@app.route('/classes', methods=['GET'])
+@jwt_required()
+def get_classes():
+    response = {"classes": []}
+
+    with grpc.insecure_channel(COMMON_SERVICE_HOST + ':' + COMMON_SERVICE_PORT) as channel:
+        stub = common_pb2_grpc.CommonServiceStub(channel)
+        classes = stub.GetClass(
+            common_pb2.GetClassRequest()
+        )
+
+    for class_name in classes.classes:
+        response["classes"].append(
+            {
+                "class_name": class_name.class_name,
+            }
+        )
+
+    return response, 200
+
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=9000)
