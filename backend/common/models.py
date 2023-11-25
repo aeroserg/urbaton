@@ -128,6 +128,7 @@ if __name__ == '__main__':
         # role2 = Role(id='78c2d488-d982-4e5b-a4ef-d105f67e6935', role='родитель')
         # role3 = Role(id='2b618d72-cd4e-4f90-81d2-293599e50e5e', role='ученик')
         # role4 = Role(id='abfa64e6-78c7-40de-ab54-bb442554b117', role='преподаватель')
+        # role5 = Role(id='2efcffdc-d012-4c6b-931b-52c0a6f14c70', role='админ')
         # db.session.add_all(
-        #     [role1, role2, role3, role4])
+        #     [role5])
         # db.session.commit()

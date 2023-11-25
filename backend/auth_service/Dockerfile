@@ -5,6 +5,5 @@ COPY . .
 
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
-RUN pip install -r requirements.txt
 
-CMD ["python", "-u", "auth.py"]
+CMD ["python", "-u", "auth_server.py"]

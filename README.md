@@ -8,13 +8,15 @@
 - 
 ## порты
 - send_email port: 9001 
-- auth port: 9000
+- api port: 9000
+- auth port: 9003
+- orders: 9004
 - common_information_service port: 9002
 
 
 ## схема апи
 ### авторизация
-- http://localhost/api/auth/login
+- http://localhost/api/login
 - POST 
 - data: {
     "login": "login",
@@ -26,7 +28,7 @@
     "role_id": "2b618d72-cd4e-4f90-81d2-293599e50e5e"
 }
 ### регистрация пользователя в системе
-- http://localhost/api/auth/register_user
+- http://localhost/api/register_user
 - POST
 - data: {
     "first_name": "Иван",
@@ -42,7 +44,7 @@
 - один имейл можно использовать только один раз
 
 ### header
-- http://localhost/api/auth/header
+- http://localhost/api/header
 - GET
 - response: {
     "user_name": user.first_name,
@@ -50,7 +52,7 @@
 }
 
 ### добавить заявку 
-- http://localhost/api/auth/new_order
+- http://localhost/api/new_order
 - POST
 - data: {
     "parent": 
@@ -76,7 +78,7 @@
 }
 
 ### регистрация школы
-- http://localhost/api/auth/register_school
+- http://localhost/api/register_school
 - POST
 - data: {
     "name": "Школа горлового ми..ре фа",
@@ -90,7 +92,7 @@
 }
 
 ### получение всех школ
-- http://localhost/api/common_information/all_schools
+- http://localhost/api/all_schools
 - GET
 - response: {
     "schools": [
