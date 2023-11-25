@@ -11,7 +11,7 @@ export default function Home() {
     className: "photo_grid",
     centerMode: true,
     infinite: true,
-    centerPadding: '4rem',
+    // centerPadding: '4rem',
     slidesToShow: 3,
     speed: 500
   };

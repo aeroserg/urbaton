@@ -193,10 +193,11 @@ h1, .b_h1 {
   width: min-content;
   text-align: center;
   margin: 0 1rem;
+  width: 400px;
 }
 .sliderPhoto img {
   padding: 2rem;
-  width: 400px;
+ 
   height: auto;
   margin: auto;
 }
