@@ -228,5 +228,31 @@ def all_schools():
     return response, 200
 
 
+@app.route('/orders', methods=['GET'])
+@jwt_required()
+def get_orders():
+    current_user = get_jwt_identity()
+    response = {"orders": []}
+    with grpc.insecure_channel(ORDER_SERVICE_HOST + ':' + ORDER_SERVICE_PORT) as channel:
+        stub = orders_pb2_grpc.OrderServiceStub(channel)
+        orders = stub.GetOrder(
+            orders_pb2.GetOrderRequest(
+                login=current_user
+            ))
+
+    for order in orders.orders:
+        response["orders"].append(
+            {
+                "id": order.id,
+                "first_name": order.first_name,
+                "last_name": order.last_name,
+                "email": order.email,
+                "phone_number": order.phone_number
+            }
+        )
+
+    return response, 200
+
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=9000)

@@ -105,3 +105,26 @@
         }
     ]
 }
+
+### получение заявок
+- http://localhost/api/orders
+- GET
+- ОБЯЗАТЕЛЬНО JWT ТОКЕН
+- response: {
+    "orders": [
+        {
+            "email": "babushka@email.com",
+            "first_name": "Бабушка",
+            "id": 6,
+            "last_name": "Пети",
+            "phone_number": "123"
+        },
+        {
+            "email": "babushka@email.com",
+            "first_name": "Петя",
+            "id": 15,
+            "last_name": "Дудец",
+            "phone_number": "123"
+        }
+    ]
+}

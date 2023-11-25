@@ -13,7 +13,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0corders.proto\"u\n\x14\x45\x64ucationOrderParent\x12\x12\n\nfirst_name\x18\x01 \x01(\t\x12\x11\n\tlast_name\x18\x02 \x01(\t\x12\r\n\x05\x65mail\x18\x03 \x01(\t\x12\x14\n\x0cphone_number\x18\x04 \x01(\t\x12\x11\n\tschool_id\x18\x05 \x01(\x05\"v\n\x15\x45\x64ucationOrderStudent\x12\x12\n\nfirst_name\x18\x01 \x01(\t\x12\x11\n\tlast_name\x18\x02 \x01(\t\x12\r\n\x05\x65mail\x18\x03 \x01(\t\x12\x14\n\x0cphone_number\x18\x04 \x01(\t\x12\x11\n\tschool_id\x18\x05 \x01(\x05\"s\n\x15\x45\x64ucationOrderRequest\x12+\n\x0cparent_order\x18\x01 \x03(\x0b\x32\x15.EducationOrderParent\x12-\n\rstudent_order\x18\x02 \x03(\x0b\x32\x16.EducationOrderStudent\")\n\x16\x45\x64ucationOrderResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x32Q\n\x0cOrderService\x12\x41\n\x0e\x45\x64ucationOrder\x12\x16.EducationOrderRequest\x1a\x17.EducationOrderResponseb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0corders.proto\"u\n\x14\x45\x64ucationOrderParent\x12\x12\n\nfirst_name\x18\x01 \x01(\t\x12\x11\n\tlast_name\x18\x02 \x01(\t\x12\r\n\x05\x65mail\x18\x03 \x01(\t\x12\x14\n\x0cphone_number\x18\x04 \x01(\t\x12\x11\n\tschool_id\x18\x05 \x01(\x05\"v\n\x15\x45\x64ucationOrderStudent\x12\x12\n\nfirst_name\x18\x01 \x01(\t\x12\x11\n\tlast_name\x18\x02 \x01(\t\x12\r\n\x05\x65mail\x18\x03 \x01(\t\x12\x14\n\x0cphone_number\x18\x04 \x01(\t\x12\x11\n\tschool_id\x18\x05 \x01(\x05\"_\n\x05Order\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x12\n\nfirst_name\x18\x02 \x01(\t\x12\x11\n\tlast_name\x18\x03 \x01(\t\x12\r\n\x05\x65mail\x18\x04 \x01(\t\x12\x14\n\x0cphone_number\x18\x05 \x01(\t\"s\n\x15\x45\x64ucationOrderRequest\x12+\n\x0cparent_order\x18\x01 \x03(\x0b\x32\x15.EducationOrderParent\x12-\n\rstudent_order\x18\x02 \x03(\x0b\x32\x16.EducationOrderStudent\")\n\x16\x45\x64ucationOrderResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\" \n\x0fGetOrderRequest\x12\r\n\x05login\x18\x01 \x01(\t\"*\n\x10GetOrderResponse\x12\x16\n\x06orders\x18\x01 \x03(\x0b\x32\x06.Order2\x82\x01\n\x0cOrderService\x12\x41\n\x0e\x45\x64ucationOrder\x12\x16.EducationOrderRequest\x1a\x17.EducationOrderResponse\x12/\n\x08GetOrder\x12\x10.GetOrderRequest\x1a\x11.GetOrderResponseb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -24,10 +24,16 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _globals['_EDUCATIONORDERPARENT']._serialized_end=133
   _globals['_EDUCATIONORDERSTUDENT']._serialized_start=135
   _globals['_EDUCATIONORDERSTUDENT']._serialized_end=253
-  _globals['_EDUCATIONORDERREQUEST']._serialized_start=255
-  _globals['_EDUCATIONORDERREQUEST']._serialized_end=370
-  _globals['_EDUCATIONORDERRESPONSE']._serialized_start=372
-  _globals['_EDUCATIONORDERRESPONSE']._serialized_end=413
-  _globals['_ORDERSERVICE']._serialized_start=415
-  _globals['_ORDERSERVICE']._serialized_end=496
+  _globals['_ORDER']._serialized_start=255
+  _globals['_ORDER']._serialized_end=350
+  _globals['_EDUCATIONORDERREQUEST']._serialized_start=352
+  _globals['_EDUCATIONORDERREQUEST']._serialized_end=467
+  _globals['_EDUCATIONORDERRESPONSE']._serialized_start=469
+  _globals['_EDUCATIONORDERRESPONSE']._serialized_end=510
+  _globals['_GETORDERREQUEST']._serialized_start=512
+  _globals['_GETORDERREQUEST']._serialized_end=544
+  _globals['_GETORDERRESPONSE']._serialized_start=546
+  _globals['_GETORDERRESPONSE']._serialized_end=588
+  _globals['_ORDERSERVICE']._serialized_start=591
+  _globals['_ORDERSERVICE']._serialized_end=721
 # @@protoc_insertion_point(module_scope)

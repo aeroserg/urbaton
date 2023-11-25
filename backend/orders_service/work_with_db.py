@@ -1,5 +1,5 @@
 from backend.common.models import (Order, OrderSchoolRelationship,
-                                   ParentStudentRelationshipOrder, app, db)
+                                   ParentStudentRelationshipOrder, User, UsersSchool, app, db)
 
 
 def add_order(first_name, last_name, email, phone_number):
@@ -33,3 +33,28 @@ def parent_student_order_relationship(parent_order_id, student_order_id):
         db.session.commit()
 
     return parent_student_relationship
+
+
+def get_users_school(login):
+    with app.app_context():
+        user = (
+            db.session.query(User, UsersSchool)
+            .join(UsersSchool, User.id == UsersSchool.user_id)
+            .filter(User.login == login)
+            .first()
+        )
+
+        print(user.UsersSchool.school_id)
+        return user.UsersSchool.school_id
+
+
+def get_orders(school_id):
+    with app.app_context():
+        orders = (
+            db.session.query(Order)
+            .join(OrderSchoolRelationship, Order.id == OrderSchoolRelationship.order_id)
+            .filter(OrderSchoolRelationship.school_id == school_id, Order.accepted == False)
+            .all()
+        )
+        print(orders)
+        return orders

@@ -33,6 +33,20 @@ class EducationOrderStudent(_message.Message):
     school_id: int
     def __init__(self, first_name: _Optional[str] = ..., last_name: _Optional[str] = ..., email: _Optional[str] = ..., phone_number: _Optional[str] = ..., school_id: _Optional[int] = ...) -> None: ...
 
+class Order(_message.Message):
+    __slots__ = ["id", "first_name", "last_name", "email", "phone_number"]
+    ID_FIELD_NUMBER: _ClassVar[int]
+    FIRST_NAME_FIELD_NUMBER: _ClassVar[int]
+    LAST_NAME_FIELD_NUMBER: _ClassVar[int]
+    EMAIL_FIELD_NUMBER: _ClassVar[int]
+    PHONE_NUMBER_FIELD_NUMBER: _ClassVar[int]
+    id: int
+    first_name: str
+    last_name: str
+    email: str
+    phone_number: str
+    def __init__(self, id: _Optional[int] = ..., first_name: _Optional[str] = ..., last_name: _Optional[str] = ..., email: _Optional[str] = ..., phone_number: _Optional[str] = ...) -> None: ...
+
 class EducationOrderRequest(_message.Message):
     __slots__ = ["parent_order", "student_order"]
     PARENT_ORDER_FIELD_NUMBER: _ClassVar[int]
@@ -46,3 +60,15 @@ class EducationOrderResponse(_message.Message):
     SUCCESS_FIELD_NUMBER: _ClassVar[int]
     success: bool
     def __init__(self, success: bool = ...) -> None: ...
+
+class GetOrderRequest(_message.Message):
+    __slots__ = ["login"]
+    LOGIN_FIELD_NUMBER: _ClassVar[int]
+    login: str
+    def __init__(self, login: _Optional[str] = ...) -> None: ...
+
+class GetOrderResponse(_message.Message):
+    __slots__ = ["orders"]
+    ORDERS_FIELD_NUMBER: _ClassVar[int]
+    orders: _containers.RepeatedCompositeFieldContainer[Order]
+    def __init__(self, orders: _Optional[_Iterable[_Union[Order, _Mapping]]] = ...) -> None: ...

@@ -16,6 +16,15 @@ message EducationOrderStudent {
   int32 school_id = 5;
 }
 
+message Order
+{
+  int32 id = 1;
+  string first_name = 2;
+  string last_name = 3;
+  string email = 4;
+  string phone_number = 5;
+}
+
 message EducationOrderRequest{
   repeated EducationOrderParent parent_order = 1;
   repeated EducationOrderStudent student_order = 2;
@@ -25,6 +34,15 @@ message EducationOrderResponse{
   bool success = 1;
 }
 
+message GetOrderRequest{
+  string login = 1;
+}
+
+message GetOrderResponse{
+  repeated Order orders = 1;
+}
+
 service OrderService{
   rpc EducationOrder(EducationOrderRequest) returns (EducationOrderResponse);
+  rpc GetOrder(GetOrderRequest) returns (GetOrderResponse);
 }

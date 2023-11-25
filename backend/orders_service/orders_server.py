@@ -11,11 +11,13 @@ from concurrent import futures
 
 import grpc
 import orders_pb2
+from orders_pb2 import Order, GetOrderResponse
 import orders_pb2_grpc
 
 import datetime
 
-from work_with_db import add_order, order_school_relation, parent_student_order_relationship
+from work_with_db import (add_order, order_school_relation, parent_student_order_relationship, get_users_school,
+                          get_orders)
 
 
 class OrderServiceServicer(orders_pb2_grpc.OrderServiceServicer):
@@ -47,6 +49,27 @@ class OrderServiceServicer(orders_pb2_grpc.OrderServiceServicer):
         reply.success = True
 
         return reply
+
+    def GetOrder(self, request, context):
+        login = request.login
+
+        response_order_list = []
+
+        school_id = get_users_school(login=login)
+        orders = get_orders(school_id)
+
+        for order in orders:
+            response_order_list.append(
+                Order(
+                    id=order.id,
+                    first_name=order.first_name,
+                    last_name=order.last_name,
+                    email=order.email,
+                    phone_number=order.phone_number,
+                )
+            )
+
+        return GetOrderResponse(orders=response_order_list)
 
 
 def serve():
