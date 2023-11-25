@@ -9,6 +9,8 @@ AUTH_SERVICE_HOST = os.getenv("AUTH_SERVICE_HOST")
 AUTH_SERVICE_PORT = os.getenv("AUTH_SERVICE_PORT")
 COMMON_SERVICE_HOST = os.getenv("COMMON_SERVICE_HOST")
 COMMON_SERVICE_PORT = os.getenv("COMMON_SERVICE_PORT")
+ORDER_SERVICE_HOST = os.getenv("ORDERS_SERVICE_HOST")
+ORDER_SERVICE_PORT = os.getenv("ORDERS_SERVICE_PORT")
 
 from flask import Flask, request
 from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity, create_access_token
@@ -19,6 +21,9 @@ import auth_pb2
 import auth_pb2_grpc
 import common_pb2
 import common_pb2_grpc
+import orders_pb2
+from orders_pb2 import EducationOrderParent, EducationOrderStudent
+import orders_pb2_grpc
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -155,7 +160,6 @@ def get_header_info():
                 login=current_user
             )
         )
-    print(response)
 
     return (
         {
@@ -165,44 +169,39 @@ def get_header_info():
     ), 200
 
 
-# @app.route('/new_order', methods=['POST'])
-# def new_order():
-#     data = request.get_json()
-#
-#     parent = data.get('parent')
-#     student = data.get('student')
-#
-#     parent_order = Order(
-#         first_name=parent['first_name'],
-#         last_name=parent['last_name'],
-#         email=parent['email'],
-#         phone_number=parent['phone_number']
-#     )
-#     db.session.add(parent_order)
-#     db.session.commit()
-#
-#     parent_order_school = OrderSchoolRelationship(order_id=parent_order.id, school_id=parent['school_id'])
-#     db.session.add(parent_order_school)
-#     db.session.commit()
-#
-#     student_order = Order(
-#         first_name=student['first_name'],
-#         last_name=student['last_name'],
-#         email=student['email'],
-#         phone_number=student['phone_number']
-#     )
-#     db.session.add(student_order)
-#     db.session.commit()
-#
-#     parent_order_school = OrderSchoolRelationship(order_id=student_order.id, school_id=parent['school_id'])
-#     db.session.add(parent_order_school)
-#     db.session.commit()
-#
-#     parent_student_relationship = ParentStudentRelationshipOrder(parent_id=parent_order.id, student_id=student_order.id)
-#     db.session.add(parent_student_relationship)
-#     db.session.commit()
-#
-#     return {'user_created': True}, 200
+@app.route('/new_order', methods=['POST'])
+def new_order():
+    data = request.get_json()
+
+    parent = data.get('parent')
+    student = data.get('student')
+
+    with grpc.insecure_channel(ORDER_SERVICE_HOST + ':' + ORDER_SERVICE_PORT) as channel:
+        stub = orders_pb2_grpc.OrderServiceStub(channel)
+        response = stub.EducationOrder(
+            orders_pb2.EducationOrderRequest(
+                parent_order=[
+                    EducationOrderParent(
+                        first_name=parent['first_name'],
+                        last_name=parent['last_name'],
+                        email=parent['email'],
+                        phone_number=parent['phone_number'],
+                        school_id=parent['school_id']
+                    )
+                ],
+                student_order=[
+                    EducationOrderStudent(
+                        first_name=student['first_name'],
+                        last_name=student['last_name'],
+                        email=student['email'],
+                        phone_number=student['phone_number'],
+                        school_id=student['school_id']
+                    )
+                ]
+            )
+        )
+
+    return {'user_created': response.success}, 200
 
 
 @app.route('/all_schools', methods=['GET'])

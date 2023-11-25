@@ -41,6 +41,16 @@ services:
       - ./backend/common:/send_email/backend/common
       - .env:/send_email/.env
 
+  orders:
+    build: backend/orders_service/
+    container_name: orders
+    ports:
+      - "9004:9004"
+    restart: always
+    volumes:
+      - ./backend/common:/orders/backend/common
+      - .env:/orders/.env
+
   frontend:
     build: frontend/
     container_name: frontend

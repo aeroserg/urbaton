@@ -51,6 +51,7 @@ class Order(db.Model):
     last_name = db.Column(db.String(80), nullable=False)
     email = db.Column(db.String(150), nullable=False)
     phone_number = db.Column(db.String(100), nullable=True)
+    accepted = db.Column(db.Boolean, nullable=False, default=False)
 
 
 class ParentStudentRelationship(db.Model):
