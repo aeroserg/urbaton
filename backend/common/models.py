@@ -66,41 +66,6 @@ class ParentStudentRelationshipOrder(db.Model):
     student_id = db.Column(db.Integer, db.ForeignKey('order.id'), nullable=False)
 
 
-class Group(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    grade = db.Column(db.Integer, nullable=False)
-    name_group = db.Column(db.String, nullable=False)
-
-
-class StudentGroupRelationship(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    student_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    group_id = db.Column(db.Integer, db.ForeignKey('group.id'), nullable=False)
-
-
-class TutorGroupRelationship(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    student_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    group_id = db.Column(db.Integer, db.ForeignKey('group.id'), nullable=False)
-
-
-class Course(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String, nullable=False)
-
-
-class StudentsCourse(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    student_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=False)
-
-
-class StudentMarks(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    students_course = db.Column(db.Integer, db.ForeignKey('students_course.id'), nullable=False)
-    mark = db.Column(db.Integer, nullable=False)
-
-
 class School(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True, nullable=False)
@@ -121,15 +86,86 @@ class OrderSchoolRelationship(db.Model):
     order_id = db.Column(db.Integer, db.ForeignKey('order.id'), nullable=False)
 
 
+# год обучения
+class EducationYear(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+
+
+# на каком году обучения студент
+class StudentEducationYearRelationship(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    student_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    education_year = db.Column(db.Integer, db.ForeignKey('education_year.id'), nullable=False)
+
+
+# буква класса
+class Class(db.Model):
+    id = db.Column(db.String, primary_key=True)
+
+
+# в каком классе ученик
+class ClassStudentRelation(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    student_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    class_id = db.Column(db.String, db.ForeignKey('class.id'), nullable=False)
+
+
+# направление обучения общие
+class CourseCommon(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False)
+
+
+# направление обучения индивидуальные
+class CourseIndividual(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False)
+
+
+# общий курс преподавателя
+class TutorCourseCommonRelationship(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    tutor_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    course_id = db.Column(db.Integer, db.ForeignKey('course_common.id'), nullable=False)
+
+
+# индивидуальный курс преподавателя
+class TutorCourseIndividualRelationship(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    tutor_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    course_id = db.Column(db.Integer, db.ForeignKey('course_individual.id'), nullable=False)
+
+
+# общий курс студента
+class StudentCourseCommon(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    student_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    course_id = db.Column(db.Integer, db.ForeignKey('course_common.id'), nullable=False)
+
+
+# индивидуальный курс студента
+class StudentsCourseIndividual(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    student_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    course_id = db.Column(db.Integer, db.ForeignKey('course_individual.id'), nullable=False)
+
+
+# оценки ученика на индивидуальном курсе
+class StudentMarksCourseIndividual(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    student_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    course_id = db.Column(db.Integer, db.ForeignKey('course_individual.id'), nullable=False)
+    mark = db.Column(db.Integer, nullable=False)
+
+
+# оценки ученика на общем курсе
+class StudentMarksCourseCommon(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    student_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    course_id = db.Column(db.Integer, db.ForeignKey('course_common.id'), nullable=False)
+    mark = db.Column(db.Integer, nullable=False)
+
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
-
-        # role1 = Role(id='642b6836-51f6-4ace-8e1e-8ff7b47e5719', role='школа')
-        # role2 = Role(id='78c2d488-d982-4e5b-a4ef-d105f67e6935', role='родитель')
-        # role3 = Role(id='2b618d72-cd4e-4f90-81d2-293599e50e5e', role='ученик')
-        # role4 = Role(id='abfa64e6-78c7-40de-ab54-bb442554b117', role='преподаватель')
-        # role5 = Role(id='2efcffdc-d012-4c6b-931b-52c0a6f14c70', role='админ')
-        # db.session.add_all(
-        #     [role5])
-        # db.session.commit()
