@@ -1,5 +1,6 @@
 from backend.common.models import (School, Class, EducationYear, User, UsersSchool, ClassStudentRelation,
-                                   StudentEducationYearRelationship, app, db)
+                                   StudentEducationYearRelationship, CourseIndividual, CourseCommon,
+                                   TutorCourseIndividualRelationship, TutorCourseCommonRelationship, app, db)
 
 
 def get_schools():
@@ -48,7 +49,24 @@ def get_students(login):
             }
             for user in users_data if user.education_year is not None
         ]
-        # response = transform_data(users_list)
+
         return users_list
 
 
+def get_tutors(login):
+    with app.app_context():
+        admin = User.query.filter_by(login=login).first()
+        admins_school = UsersSchool.query.filter_by(user_id=admin.id).first()
+
+        users = db.session.query(User.first_name, User.last_name, CourseIndividual.name.label('individual_course_name'),
+                                 CourseCommon.name.label('common_course_name')) \
+            .join(UsersSchool, User.id == UsersSchool.user_id) \
+            .join(TutorCourseIndividualRelationship, User.id == TutorCourseIndividualRelationship.tutor_id,
+                  isouter=True) \
+            .join(CourseIndividual, TutorCourseIndividualRelationship.course_id == CourseIndividual.id, isouter=True) \
+            .join(TutorCourseCommonRelationship, User.id == TutorCourseCommonRelationship.tutor_id, isouter=True) \
+            .join(CourseCommon, TutorCourseCommonRelationship.course_id == CourseCommon.id, isouter=True) \
+            .filter(UsersSchool.school_id == admins_school.school_id) \
+            .all()
+
+        return users

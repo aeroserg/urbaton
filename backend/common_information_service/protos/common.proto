@@ -36,6 +36,13 @@ message Grades{
   repeated GradeFullInfo grade_full_info = 1;
 }
 
+message Tutor{
+  string first_name = 1;
+  string last_name = 2;
+  string common_course_name = 3;
+  string individual_course_name = 4;
+}
+
 message SchoolsRequest{}
 
 message SchoolsResponse{
@@ -62,9 +69,18 @@ message GetStudentsResponse{
   repeated Grades grades = 1;
 }
 
+message GetTutorRequest{
+  string login = 1;
+}
+
+message GetTutorResponse{
+  repeated Tutor tutors = 1;
+}
+
 service CommonService{
   rpc Schools(SchoolsRequest) returns (SchoolsResponse);
   rpc GetClass(GetClassRequest) returns (GetClassResponse);
   rpc GetEducationYear(GetEducationYearRequest) returns (GetEducationYearResponse);
   rpc GetStudents(GetStudentsRequest) returns (GetStudentsResponse);
+  rpc GetTutor(GetTutorRequest) returns (GetTutorResponse);
 }

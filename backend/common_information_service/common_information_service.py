@@ -15,9 +15,10 @@ import datetime
 import grpc
 import common_pb2_grpc
 from common_pb2 import (School, SchoolsResponse, GetClassResponse, Class, GetEducationYearResponse,
-                        EducationYear, Grades, GradeFullInfo, Classes, Students, GetStudentsResponse)
+                        EducationYear, Grades, GradeFullInfo, Classes, Students, GetStudentsResponse,
+                        Tutor, GetTutorResponse)
 
-from work_with_db import get_schools, get_classes, get_education_years, get_students
+from work_with_db import get_schools, get_classes, get_education_years, get_students, get_tutors
 
 
 class CommonServiceServicer(common_pb2_grpc.CommonServiceServicer):
@@ -97,6 +98,29 @@ class CommonServiceServicer(common_pb2_grpc.CommonServiceServicer):
             result.grade_full_info.append(grade_info)
 
         return GetStudentsResponse(grades=[result])
+
+    def GetTutor(self, request, context):
+        login = request.login
+
+        tutors = get_tutors(login)
+
+        response = []
+
+        first_name_list = []
+
+        for tutor in tutors:
+            if tutor.common_course_name is not None and tutor.first_name not in first_name_list:
+                response.append(
+                    Tutor(
+                        first_name=tutor.first_name,
+                        last_name=tutor.last_name,
+                        common_course_name=tutor.common_course_name,
+                        individual_course_name=tutor.individual_course_name
+                    )
+                )
+                first_name_list.append(tutor.first_name)
+
+        return GetTutorResponse(tutors=response)
 
 
 def serve():

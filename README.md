@@ -269,3 +269,54 @@
         }
     }
 }
+
+### получение преподавателей для расписания 
+- http://localhost/api/tutors_for_timetable
+- GET
+- ОБЯЗАТЕЛЬНО JWT ТОКЕН
+- response: {
+    "tutors": [
+        {
+            "common_course_name": "сольфеджио",
+            "first_name": "Ханс",
+            "individual_course_name": "Саксофон",
+            "last_name": "Циммер"
+        },
+        {
+            "common_course_name": "сольфеджио",
+            "first_name": "Антонио",
+            "individual_course_name": "Баян",
+            "last_name": "Вивальда"
+        },
+        {
+            "common_course_name": "оркестр",
+            "first_name": "Рихард",
+            "individual_course_name": "Губная гармошка",
+            "last_name": "Вагнер"
+        },
+        {
+            "common_course_name": "история музыки",
+            "first_name": "Луис",
+            "individual_course_name": "Губная гармошка",
+            "last_name": "Армстронг"
+        },
+        {
+            "common_course_name": "хор",
+            "first_name": "Френк",
+            "individual_course_name": "Губная гармошка",
+            "last_name": "Синатра"
+        },
+        {
+            "common_course_name": "хор",
+            "first_name": "Валерий",
+            "individual_course_name": "Фортепино",
+            "last_name": "Миладзе"
+        },
+        {
+            "common_course_name": "история музыки",
+            "first_name": "Мэйби",
+            "individual_course_name": "Губная гармошка",
+            "last_name": "Бэйби"
+        }
+    ]
+}

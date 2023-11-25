@@ -63,6 +63,18 @@ class Grades(_message.Message):
     grade_full_info: _containers.RepeatedCompositeFieldContainer[GradeFullInfo]
     def __init__(self, grade_full_info: _Optional[_Iterable[_Union[GradeFullInfo, _Mapping]]] = ...) -> None: ...
 
+class Tutor(_message.Message):
+    __slots__ = ["first_name", "last_name", "common_course_name", "individual_course_name"]
+    FIRST_NAME_FIELD_NUMBER: _ClassVar[int]
+    LAST_NAME_FIELD_NUMBER: _ClassVar[int]
+    COMMON_COURSE_NAME_FIELD_NUMBER: _ClassVar[int]
+    INDIVIDUAL_COURSE_NAME_FIELD_NUMBER: _ClassVar[int]
+    first_name: str
+    last_name: str
+    common_course_name: str
+    individual_course_name: str
+    def __init__(self, first_name: _Optional[str] = ..., last_name: _Optional[str] = ..., common_course_name: _Optional[str] = ..., individual_course_name: _Optional[str] = ...) -> None: ...
+
 class SchoolsRequest(_message.Message):
     __slots__ = []
     def __init__(self) -> None: ...
@@ -104,3 +116,15 @@ class GetStudentsResponse(_message.Message):
     GRADES_FIELD_NUMBER: _ClassVar[int]
     grades: _containers.RepeatedCompositeFieldContainer[Grades]
     def __init__(self, grades: _Optional[_Iterable[_Union[Grades, _Mapping]]] = ...) -> None: ...
+
+class GetTutorRequest(_message.Message):
+    __slots__ = ["login"]
+    LOGIN_FIELD_NUMBER: _ClassVar[int]
+    login: str
+    def __init__(self, login: _Optional[str] = ...) -> None: ...
+
+class GetTutorResponse(_message.Message):
+    __slots__ = ["tutors"]
+    TUTORS_FIELD_NUMBER: _ClassVar[int]
+    tutors: _containers.RepeatedCompositeFieldContainer[Tutor]
+    def __init__(self, tutors: _Optional[_Iterable[_Union[Tutor, _Mapping]]] = ...) -> None: ...

@@ -348,5 +348,29 @@ def get_students_for_timetable():
     return transform_data(result), 200
 
 
+@app.route('/tutors_for_timetable', methods=['GET'])
+@jwt_required()
+def get_tutors_for_timetable():
+    current_user = get_jwt_identity()
+
+    with grpc.insecure_channel(COMMON_SERVICE_HOST + ':' + COMMON_SERVICE_PORT) as channel:
+        stub = common_pb2_grpc.CommonServiceStub(channel)
+        response = stub.GetTutor(
+            common_pb2.GetTutorRequest(
+                login=str(current_user)
+            ))
+
+    result = []
+    for tutor in response.tutors:
+        result.append({
+            'first_name': tutor.first_name,
+            'last_name': tutor.last_name,
+            'individual_course_name': tutor.individual_course_name,
+            'common_course_name': tutor.common_course_name
+        })
+
+    return {"tutors": result}, 200
+
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=9000)
