@@ -1,4 +1,6 @@
 import os
+from collections import defaultdict
+
 from dotenv import load_dotenv
 if os.path.exists('../../.env'):
     load_dotenv('../../.env')
@@ -12,9 +14,10 @@ import datetime
 
 import grpc
 import common_pb2_grpc
-from common_pb2 import School, SchoolsResponse, GetClassResponse, Class
+from common_pb2 import (School, SchoolsResponse, GetClassResponse, Class, GetEducationYearResponse,
+                        EducationYear, Grades, GradeFullInfo, Classes, Students, GetStudentsResponse)
 
-from work_with_db import get_schools, get_classes
+from work_with_db import get_schools, get_classes, get_education_years, get_students
 
 
 class CommonServiceServicer(common_pb2_grpc.CommonServiceServicer):
@@ -49,6 +52,51 @@ class CommonServiceServicer(common_pb2_grpc.CommonServiceServicer):
             )
 
         return GetClassResponse(classes=response)
+
+    def GetEducationYear(self, request, context):
+        education_years = get_education_years()
+
+        response = []
+
+        for year in education_years:
+            response.append(
+                EducationYear(
+                    education_year=year.id
+                )
+            )
+
+        return GetEducationYearResponse(education_years=response)
+
+    def GetStudents(self, request, context):
+        login = request.login
+
+        students = get_students(login)
+
+        result = Grades()
+
+        # Используем defaultdict для удобства группировки данных
+        grouped_data = defaultdict(lambda: defaultdict(list))
+
+        for entry in students:
+            grade = entry.get('grade', 0)
+            class_name = entry.get('class_name') or entry.get('class_id') or 'Unknown'
+
+            student_info = Students(
+                first_name=entry.get('first_name', ''),
+                last_name=entry.get('last_name', ''),
+                id=entry.get('id', 0)
+            )
+
+            grouped_data[grade][class_name].append(student_info)
+
+        for grade, classes in grouped_data.items():
+            grade_info = GradeFullInfo(
+                grade=grade,
+                classes=[Classes(class_name=name, students=students) for name, students in classes.items()]
+            )
+            result.grade_full_info.append(grade_info)
+
+        return GetStudentsResponse(grades=[result])
 
 
 def serve():

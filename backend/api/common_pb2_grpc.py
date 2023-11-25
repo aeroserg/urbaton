@@ -24,6 +24,16 @@ class CommonServiceStub(object):
                 request_serializer=common__pb2.GetClassRequest.SerializeToString,
                 response_deserializer=common__pb2.GetClassResponse.FromString,
                 )
+        self.GetEducationYear = channel.unary_unary(
+                '/CommonService/GetEducationYear',
+                request_serializer=common__pb2.GetEducationYearRequest.SerializeToString,
+                response_deserializer=common__pb2.GetEducationYearResponse.FromString,
+                )
+        self.GetStudents = channel.unary_unary(
+                '/CommonService/GetStudents',
+                request_serializer=common__pb2.GetStudentsRequest.SerializeToString,
+                response_deserializer=common__pb2.GetStudentsResponse.FromString,
+                )
 
 
 class CommonServiceServicer(object):
@@ -41,6 +51,18 @@ class CommonServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def GetEducationYear(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetStudents(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_CommonServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -53,6 +75,16 @@ def add_CommonServiceServicer_to_server(servicer, server):
                     servicer.GetClass,
                     request_deserializer=common__pb2.GetClassRequest.FromString,
                     response_serializer=common__pb2.GetClassResponse.SerializeToString,
+            ),
+            'GetEducationYear': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetEducationYear,
+                    request_deserializer=common__pb2.GetEducationYearRequest.FromString,
+                    response_serializer=common__pb2.GetEducationYearResponse.SerializeToString,
+            ),
+            'GetStudents': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetStudents,
+                    request_deserializer=common__pb2.GetStudentsRequest.FromString,
+                    response_serializer=common__pb2.GetStudentsResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -95,5 +127,39 @@ class CommonService(object):
         return grpc.experimental.unary_unary(request, target, '/CommonService/GetClass',
             common__pb2.GetClassRequest.SerializeToString,
             common__pb2.GetClassResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetEducationYear(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/CommonService/GetEducationYear',
+            common__pb2.GetEducationYearRequest.SerializeToString,
+            common__pb2.GetEducationYearResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetStudents(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/CommonService/GetStudents',
+            common__pb2.GetStudentsRequest.SerializeToString,
+            common__pb2.GetStudentsResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

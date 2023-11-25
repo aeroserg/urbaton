@@ -146,6 +146,21 @@
 # cs15 = ClassStudentRelation(student_id=24, class_id="ре")
 #
 #
+# us1 = UsersSchool(school_id=1, user_id=2)
+# us2 = UsersSchool(school_id=1, user_id=11)
+# us3 = UsersSchool(school_id=1, user_id=12)
+# us4 = UsersSchool(school_id=1, user_id=13)
+# us5 = UsersSchool(school_id=1, user_id=14)
+# us6 = UsersSchool(school_id=1, user_id=15)
+# us7 = UsersSchool(school_id=1, user_id=16)
+# us8 = UsersSchool(school_id=1, user_id=17)
+# us9 = UsersSchool(school_id=1, user_id=18)
+# us10 = UsersSchool(school_id=1, user_id=19)
+# us11 = UsersSchool(school_id=1, user_id=20)
+# us12 = UsersSchool(school_id=1, user_id=21)
+# us13 = UsersSchool(school_id=1, user_id=22)
+# us14 = UsersSchool(school_id=1, user_id=23)
+# us15 = UsersSchool(school_id=1, user_id=24)
 # db.session.add_all(
 #     [cs1, cs2, cs3, cs4, cs5, cs6, cs7, cs8, cs9, cs10, cs11, cs12, cs13, cs14, cs15])
 # db.session.commit()

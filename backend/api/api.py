@@ -275,5 +275,78 @@ def get_classes():
     return response, 200
 
 
+@app.route('/grade', methods=['GET'])
+@jwt_required()
+def get_grade():
+    response = {"grades": []}
+
+    with grpc.insecure_channel(COMMON_SERVICE_HOST + ':' + COMMON_SERVICE_PORT) as channel:
+        stub = common_pb2_grpc.CommonServiceStub(channel)
+        grades = stub.GetEducationYear(
+            common_pb2.GetEducationYearRequest()
+        )
+
+    for grade in grades.education_years:
+        response["grades"].append(
+            {
+                "grade": grade.education_year,
+            }
+        )
+
+    return response, 200
+
+
+def transform_data(input_data):
+    result = {"grades": {}}
+
+    for entry in input_data:
+        grade = entry.get("grade")
+        class_name = entry.get("class_name")
+
+        if grade not in result["grades"]:
+            result["grades"][grade] = {}
+
+        if class_name not in result["grades"][grade]:
+            result["grades"][grade][class_name] = []
+
+        student_info = {"first_name": entry["first_name"], "id": entry["id"]}
+        result["grades"][grade][class_name].append(student_info)
+
+    return result
+
+
+@app.route('/students_for_timetable', methods=['GET'])
+@jwt_required()
+def get_students_for_timetable():
+    current_user = get_jwt_identity()
+
+    with grpc.insecure_channel(COMMON_SERVICE_HOST + ':' + COMMON_SERVICE_PORT) as channel:
+        stub = common_pb2_grpc.CommonServiceStub(channel)
+        response = stub.GetStudents(
+            common_pb2.GetStudentsRequest(
+                login=str(current_user)
+            ))
+
+    result = []
+
+    for grade_info in response.grades[0].grade_full_info:
+        grade = grade_info.grade
+        for class_info in grade_info.classes:
+            class_name = class_info.class_name
+            students = class_info.students
+
+            for student_info in students:
+                entry = {
+                    'grade': grade,
+                    'class_name': class_name,
+                    'first_name': student_info.first_name,
+                    'last_name': student_info.last_name,
+                    'id': student_info.id
+                }
+                result.append(entry)
+
+    return transform_data(result), 200
+
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=9000)
