@@ -39,8 +39,8 @@ export default function Login() {
                     console.log(data)
                     if(data.access_token !== (undefined && null && "")) {
                        
-                       setCookie('XToken', `${data.access_token}`, {'max-age': 2592000, 'path': '/', httpOnly: true});
-                       setCookie('userRoleId', `${data.role_id}`, {'max-age': 2592000, 'path': '/', httpOnly: true});
+                       setCookie('XToken', `${data.access_token}`, {'max-age': 2592000, 'path': '/'});
+                       setCookie('userRoleId', `${data.role_id}`, {'max-age': 2592000, 'path': '/'});
 
                      
                       router.push('/lk/')

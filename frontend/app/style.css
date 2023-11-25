@@ -3,6 +3,10 @@ a:not([class]) {
     font-family: var(--font-rubik);
 
 }
+body {
+  font-family: var(--font-rubik);
+  font-weight: 400;
+}
 .l-section {
   padding: 2rem 0;
 }
@@ -86,6 +90,7 @@ h1, .b_h1 {
 }
 .b_nav li {
   margin-right: 1rem;
+  text-align: center;
 }
 .b_nav li a {
   font-size: 18px;
@@ -130,7 +135,12 @@ h1, .b_h1 {
   flex-direction: column;
   justify-content: center;
 }
+.btn_wrapper {
+  margin: 0 auto;
+    width: fit-content;
+}
 .main_btn {
+  display: block;
   width: 100%;
   background-color: #5559FF;
   padding: .7rem 4rem;
@@ -151,13 +161,89 @@ h1, .b_h1 {
 .b_rigthSide_wrapper {
 
 }
-.d-grid {
-
+.photo_grid{
+  grid-template-columns: repeat(12, 1fr);
+  align-items: center;
+  grid-gap: 1rem
+  
 }
 
+.b_dirPhoto:nth-child(3n+1){
+  grid-column: auto / span 3;
+}
+.b_dirPhoto:nth-child(3n+2){
+  grid-column: auto / span 4;
+}
+.b_dirPhoto:nth-child(3n+3){
+  grid-column: auto / span 5;
+}
+.b_dirPhoto img {
+  width: 100%;
+  height: auto;
+}
+.teachers {
+  background-image: url('../public/img/vector_teachers.svg');
+  background-clip: border-box;
+  background-size: cover;
+}
+.sliderItem {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: min-content;
+  text-align: center;
+  margin: 0 1rem;
+}
+.sliderPhoto img {
+  padding: 2rem;
+  width: 400px;
+  height: auto;
+  margin: auto;
+}
+.itemBody {
+  margin-top: -18rem;
+  background-color: #5559FF;
+  border-radius: 20px;
+  color: #ffffff;
+  font-size: 20px;
+  padding: 17rem 2rem 2rem 2rem;
+}
+.itemName {
+  font-size: 25px;
+}
+.slick-slide .itemText{
+  display: none;
+}
+.slick-slide.slick-active.slick-center.slick-current .itemText{
+  display: block;
+}
+.slick-track {
+  display: flex!important;
+  align-items: center!important;
+  gap: 1rem!important;
+}
 
 @media screen and (min-width: 997px) {
   .w-lg-50 {
     width: 50%!important;
+  }
+
+}
+
+@media screen and (max-width: 997px) {
+  .photo_grid{
+    grid-template-columns: repeat(3, 1fr);
+    align-items: flex-end;
+    grid-gap: 1rem
+    
+  }
+  .b_dirPhoto:nth-child(3n+1){
+    grid-column: auto / span 3;
+  }
+  .b_dirPhoto:nth-child(3n+2){
+    grid-column: auto / span 3;
+  }
+  .b_dirPhoto:nth-child(3n+3){
+    grid-column: auto / span 3;
   }
 }

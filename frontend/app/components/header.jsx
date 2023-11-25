@@ -26,7 +26,7 @@ export default function Header({...props}) {
         <header>
             <div className="container-lg">
                 <div className="header_inner d-flex">
-                    <div className="logo"><Image alt="" width={100} height={50} src="logo.svg" /></div>
+                    <div className="logo"><Image alt="" width={75} height={75} style={{marginRight: "2rem"}} src="logo.svg" /></div>
                     <div className="header_centerText"><Nav lk={props.isForLk}/></div>
                     {/* <div className="header_authLink"><Link href="/auth" >Войдите</Link></div> */}
                     <div className="b_rigthSide_wrapper">
