@@ -9,8 +9,10 @@ export default function Orders() {
     })
 
     useEffect(() => {
+        const HOST = location.protocol + '//' + location.host
+
         if (getCookie('XToken')) {
-            fetch('http://localhost/api/orders', {
+            fetch(`${HOST}/api/orders`, {
                 method: "GET",
                 headers: {
                     'Authorization': `Bearer ${getCookie('XToken')}`

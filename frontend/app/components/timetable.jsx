@@ -33,8 +33,10 @@ export default function TimeTable({...props}) {
 
 
     useEffect(() => {
+        const HOST = location.protocol + '//' + location.host
+
         if (getCookie('XToken')) {
-            fetch('http://localhost/api/tutors_for_timetable', {
+            fetch(`${HOST}/api/tutors_for_timetable`, {
                 method: "GET",
                 headers: {
                     'Authorization': `Bearer ${getCookie('XToken')}`
@@ -44,7 +46,7 @@ export default function TimeTable({...props}) {
             .then(data =>{
                 setTutors(data)
             });
-            fetch('http://localhost/api/grade', {
+            fetch(`${HOST}/api/grade`, {
                 method: "GET",
                 headers: {
                     'Authorization': `Bearer ${getCookie('XToken')}`
@@ -68,8 +70,10 @@ export default function TimeTable({...props}) {
         for (var i = 0, len = elements.length; i < len; ++i) {
             elements[i].readOnly = true;
         }
+        const HOST = location.protocol + '//' + location.host
+
         const urls = {
-            order: 'http://localhost/api/',
+            order:  `${HOST}/api/`,
         }
         dataToSend = {
           parallel: parId,

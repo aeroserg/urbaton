@@ -14,7 +14,9 @@ export default function Lk() {
 const router = useRouter();
   const role = getCookie('userRoleId')
   useEffect(() => {
-    fetch('http://localhost/api/header', {
+    const HOST = location.protocol + '//' + location.host
+
+    fetch(`${HOST}/api/header`, {
         method: "GET",
         headers: {
             'Authorization': `Bearer ${getCookie('XToken')}`

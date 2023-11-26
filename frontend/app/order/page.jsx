@@ -10,7 +10,9 @@ export default function Order() {
     })
 
     useEffect(() => {
-        fetch('http://localhost/api/all_schools', {
+        const HOST = location.protocol + '//' + location.host
+
+        fetch(`${HOST}/api/all_schools`, {
             method: "GET"
         })
         .then(response => response.json())
@@ -44,8 +46,10 @@ export default function Order() {
             elements[i].readOnly = true;
             console.log(123)
         }
+        const HOST = location.protocol + '//' + location.host
+
         const urls = {
-            order: 'http://localhost/api/new_order',
+            order: `${HOST}/api/new_order`,
         }
         dataToSend = {
             parent: 

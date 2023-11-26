@@ -10,8 +10,10 @@ export default function Nav({...props}) {
     })
     const [showToolTip, setShowToolTip] = useState(false);
     useEffect(() => {
+        const HOST = location.protocol + '//' + location.host
+
         if (getCookie('XToken')) {
-            fetch('http://localhost/api/get_messages', {
+            fetch(`${HOST}/api/get_messages`, {
                 method: "GET",
                 headers: {
                     'Authorization': `Bearer ${getCookie('XToken')}`

@@ -9,8 +9,10 @@ import { getCookie } from "cookies-next"
 export default function Header({...props}) {
     const [userName, setName] = useState(undefined);
      useEffect(() => {
+        const HOST = location.protocol + '//' + location.host
+
         if (getCookie('XToken')) {
-            fetch('http://localhost/api/header', {
+            fetch(`${HOST}/api/header`, {
                 method: "GET",
                 headers: {
                     'Authorization': `Bearer ${getCookie('XToken')}`

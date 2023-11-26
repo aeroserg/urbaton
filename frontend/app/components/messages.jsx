@@ -8,8 +8,9 @@ export default function Messages() {
     const [textMessagesValue, setTextMessagesValue] = useState('')
     const [idTo, setIdTo] = useState(0)
     useEffect(() => {
+        const HOST = location.protocol + '//' + location.host
         if (getCookie('XToken')) {
-            fetch('http://localhost/api/get_all_users', {
+            fetch(`${HOST}/api/get_all_users`, {
                 method: "GET",
                 headers: {
                     'Authorization': `Bearer ${getCookie('XToken')}`
@@ -27,8 +28,10 @@ export default function Messages() {
         for (var i = 0, len = elements.length; i < len; ++i) {
             elements[i].readOnly = true;
         }
+        const HOST = location.protocol + '//' + location.host
+
         const urls = {
-            order: 'http://localhost/api/send_message',
+            order: `${HOST}/api/send_message`,
         }
         const dataToSend = {
             id_to: idTo,
