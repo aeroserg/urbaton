@@ -19,7 +19,7 @@ export default function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const urls = {
-            loginUrl: 'http://localhost/api/login',
+            loginUrl: 'http://142.93.230.144/api/login',
         }
         switch(tokenExists){
             case false:
