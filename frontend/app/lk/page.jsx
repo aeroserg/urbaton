@@ -14,9 +14,19 @@ export default function Lk() {
 const router = useRouter();
   const role = getCookie('userRoleId')
   useEffect(() => {
-    if (getCookie('XToken') === undefined) router.push('/signout');
+    fetch('http://localhost/api/header', {
+        method: "GET",
+        headers: {
+            'Authorization': `Bearer ${getCookie('XToken')}`
+          }
+    })
+    .then(response => response.json())
+    .then(data =>{
+        if (data.msg === ( 'Token has expired' || 'Not enough segments')) router.push('/signout');
+    })  
+    
   },[router])
-  console.log(role)
+
   switch (role) {
     case "abfa64e6-78c7-40de-ab54-bb442554b117":
       return <LkForTeacher />;

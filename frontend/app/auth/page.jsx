@@ -19,7 +19,7 @@ export default function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const urls = {
-            loginUrl: 'http://localhost/api/auth/login',
+            loginUrl: 'http://localhost/api/login',
         }
         switch(tokenExists){
             case false:
@@ -36,7 +36,7 @@ export default function Login() {
                       }
                     });
                     let data = await res.json();
-                    console.log(data)
+                    
                     if(data.access_token !== (undefined && null && "")) {
                        
                        setCookie('XToken', `${data.access_token}`, {'max-age': 2592000, 'path': '/'});
@@ -64,7 +64,7 @@ export default function Login() {
   
             return (
                 <>
-                    <Header headerText={"Вход"} isForLk={false}/>
+                    <Header isForLk={false}/>
                         <section>
                             <div className="container-xl">
                                 <div className="b_h1 text-center">

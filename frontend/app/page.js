@@ -3,6 +3,7 @@ import Header from './components/header'
 import Image from 'next/image'
 import Link from 'next/link'
 import Slider from "react-slick";
+import News from './components/news';
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
 
@@ -13,7 +14,17 @@ export default function Home() {
     infinite: true,
     slidesToShow: 3,
     speed: 500,
+    centerPadding: '0px',
+    dots: true,
+    initialSlide: 0,
     responsive: [
+      {
+        breakpoint: 1200,
+        settings:{
+          slidesToShow: 2,
+          slidesToScroll: 2,
+        }
+      },
       {
         breakpoint: 997,
         settings: {
@@ -109,9 +120,10 @@ export default function Home() {
               </div>
             </div>
             </Slider>
-           
+         
           </div>
         </section>
+        <News />
       </main>
     </>
   )

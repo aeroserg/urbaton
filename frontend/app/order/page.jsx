@@ -10,7 +10,7 @@ export default function Order() {
     })
 
     useEffect(() => {
-        fetch('http://localhost/api/common_information/all_schools', {
+        fetch('http://localhost/api/all_schools', {
             method: "GET"
         })
         .then(response => response.json())
@@ -19,7 +19,7 @@ export default function Order() {
             setSchoolId(data.schools[0].id)
             }
         ) 
-    })
+    },[])
 
     const router = useRouter()
     const [emailValue, setEmailValue] = useState('');
@@ -33,9 +33,10 @@ export default function Order() {
     const [childPhoneValue, setChildPhoneValue] = useState('');
 
     const [selectValue, setSelectedValue] = useState('Выберете учебное заведение')
-    const [schoolId, setSchoolId] = useState()
+    const [schoolId, setSchoolId] = useState(0)
+
     let dataToSend = {}
-    
+    console.log(schoolId)
     const handleSubmit = async (e) => {
         e.preventDefault();
         let elements = e.target.elements;
@@ -44,7 +45,7 @@ export default function Order() {
             console.log(123)
         }
         const urls = {
-            order: 'http://localhost/api/auth/new_order',
+            order: 'http://localhost/api/new_order',
         }
         dataToSend = {
             parent: 
@@ -194,7 +195,7 @@ export default function Order() {
                                         type="text"
                                         onChange={(e) => setChildEmailValue(e.target.value)}
                                         ></input>
-                                        <select id={schoolId} value={selectValue} onChange={(e) => {setSelectedValue(e.target.value); setSchoolId(e.target.attributes.id.value)}} name="select_school">
+                                        <select id={schoolId} value={selectValue} onChange={(e) => {setSelectedValue(e.target.value); setSchoolId(e.target.selectedOptions[0].attributes.id.value)}} name="select_school">
                                             {schoolsData.schools ? schoolsData.schools.map((item) => (
                                                 <option id={item.id} value={item.name} key={item.id}>{item.name}</option>
                                             )) : undefined}
