@@ -1,6 +1,7 @@
 from backend.common.models import (School, Class, EducationYear, User, UsersSchool, ClassStudentRelation,
                                    StudentEducationYearRelationship, CourseIndividual, CourseCommon,
-                                   TutorCourseIndividualRelationship, TutorCourseCommonRelationship, Role, app, db)
+                                   TutorCourseIndividualRelationship, TutorCourseCommonRelationship, Role,
+                                   StudentsCourseIndividual, StudentMarksCourseIndividual, app, db)
 
 
 def get_schools():
@@ -78,3 +79,37 @@ def get_users():
             join(Role, User.role_id == Role.id).all()
 
         return users_info
+
+
+def get_tutors_student(tutor_id):
+    with app.app_context():
+        individual_courses = TutorCourseIndividualRelationship.query.filter_by(tutor_id=tutor_id).all()
+
+        students = []
+        for course in individual_courses:
+            # Get all students enrolled in this course
+            course_students = StudentsCourseIndividual.query.filter_by(course_id=course.id).all()
+
+            for student in course_students:
+                # Get student's marks for this course
+                marks = StudentMarksCourseIndividual.query.filter_by(student_id=student.student_id,
+                                                                     course_id=course.id).all()
+
+                # Get student's first name and last name
+                student_info = User.query.get(student.student_id)
+
+                student_data = {
+                    "first_name": student_info.first_name,
+                    "last_name": student_info.last_name,
+                    "id": student.student_id,
+                    "marks": [mark.mark for mark in marks]
+                }
+
+                students.append(student_data)
+        return students
+
+
+def get_user(login):
+    with app.app_context():
+        user = User.query.filter_by(login=login).first()
+        return user

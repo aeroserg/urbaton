@@ -442,5 +442,30 @@ def get_all_users():
     return response, 200
 
 
+@app.route('/get_tutor_students', methods=['GET'])
+@jwt_required()
+def get_tutor_students():
+    current_user = get_jwt_identity()
+
+    response = {"tutors_students": []}
+
+    with grpc.insecure_channel(COMMON_SERVICE_HOST + ':' + COMMON_SERVICE_PORT) as channel:
+        stub = common_pb2_grpc.CommonServiceStub(channel)
+        tutors_students = stub.GetTutorsStudent(
+            common_pb2.GetTutorsStudentRequest(
+                login=str(current_user)
+            ))
+
+    for student in tutors_students.student_marks:
+        response["tutors_students"].append({
+            "id": student.id,
+            "first_name": student.first_name,
+            "last_name": student.last_name,
+            "mark": student.mark
+        })
+
+    return response, 200
+
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=9000)

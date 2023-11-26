@@ -50,6 +50,13 @@ message User{
   string role = 4;
 }
 
+message StudentMarks{
+  int32 id = 1;
+  string first_name = 2;
+  string last_name = 3;
+  int32 mark = 4;
+}
+
 message SchoolsRequest{}
 
 message SchoolsResponse{
@@ -90,6 +97,14 @@ message GetUsersResponse{
   repeated User users = 1;
 }
 
+message GetTutorsStudentRequest{
+  string login = 1;
+}
+
+message GetTutorsStudentResponse{
+  repeated StudentMarks student_marks = 1;
+}
+
 service CommonService{
   rpc Schools(SchoolsRequest) returns (SchoolsResponse);
   rpc GetClass(GetClassRequest) returns (GetClassResponse);
@@ -97,4 +112,5 @@ service CommonService{
   rpc GetStudents(GetStudentsRequest) returns (GetStudentsResponse);
   rpc GetTutor(GetTutorRequest) returns (GetTutorResponse);
   rpc GetUser(GetUsersRequest) returns (GetUsersResponse);
+  rpc GetTutorsStudent(GetTutorsStudentRequest) returns (GetTutorsStudentResponse);
 }

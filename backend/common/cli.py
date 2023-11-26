@@ -171,6 +171,9 @@
 # us23 = UsersSchool(school_id=1, user_id=32)
 # us24 = UsersSchool(school_id=1, user_id=33)
 # us25 = UsersSchool(school_id=1, user_id=34)
+# u = User(first_name='Анастасия', last_name='Максимова', password='mama123', email='test@email.com',
+#                       login='best_mama',
+#                       phone_number='1', role_id='78c2d488-d982-4e5b-a4ef-d105f67e6935')
 # db.session.add_all(
 #     [cs1, cs2, cs3, cs4, cs5, cs6, cs7, cs8, cs9, cs10, cs11, cs12, cs13, cs14, cs15])
 # db.session.commit()

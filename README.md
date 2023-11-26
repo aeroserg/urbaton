@@ -1,11 +1,11 @@
-# УРБАТОН
+#  УРБАТОН
 
 ## запуск проекта
 - создать в корне проекта файл .env (рядом с .env.tmplt)
 - сбилдить docker-compose build
 - запустить docker-compose up -d
 - остановить docker-compose down -v
-- 
+
 ## порты
 - send_email port: 9001 
 - api port: 9000
@@ -364,6 +364,33 @@
             "id": 24,
             "last_name": "Кардашьян",
             "role": "ученик"
+        }
+    ]
+}
+
+### получение студентов учителя
+- http://localhost/api/get_tutor_students
+- GET
+- ОБЯЗАТЕЛЬНО JWT ТОКЕН
+- response: {
+    "tutors_students": [
+        {
+            "first_name": "Иван",
+            "id": 11,
+            "last_name": "Антипов",
+            "mark": 3
+        },
+        {
+            "first_name": "Сергей",
+            "id": 15,
+            "last_name": "Анненков",
+            "mark": 3
+        },
+        {
+            "first_name": "Райан",
+            "id": 19,
+            "last_name": "Гослинг",
+            "mark": 5
         }
     ]
 }
