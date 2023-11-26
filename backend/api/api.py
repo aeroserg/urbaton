@@ -424,5 +424,23 @@ def get_messages():
     return response, 200
 
 
+@app.route('/get_all_users', methods=['GET'])
+@jwt_required()
+def get_all_users():
+    response = {"users": []}
+
+    with grpc.insecure_channel(COMMON_SERVICE_HOST + ':' + COMMON_SERVICE_PORT) as channel:
+        stub = common_pb2_grpc.CommonServiceStub(channel)
+        users = stub.GetUser(
+            common_pb2.GetTutorRequest())
+
+    for user in users.users:
+        response["users"].append(
+            {"first_name": user.first_name, "last_name": user.last_name, "id": user.id, "role": user.role}
+        )
+
+    return response, 200
+
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=9000)

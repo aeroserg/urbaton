@@ -16,9 +16,9 @@ import grpc
 import common_pb2_grpc
 from common_pb2 import (School, SchoolsResponse, GetClassResponse, Class, GetEducationYearResponse,
                         EducationYear, Grades, GradeFullInfo, Classes, Students, GetStudentsResponse,
-                        Tutor, GetTutorResponse)
+                        Tutor, GetTutorResponse, User, GetUsersResponse)
 
-from work_with_db import get_schools, get_classes, get_education_years, get_students, get_tutors
+from work_with_db import get_schools, get_classes, get_education_years, get_students, get_tutors, get_users
 
 
 class CommonServiceServicer(common_pb2_grpc.CommonServiceServicer):
@@ -121,6 +121,23 @@ class CommonServiceServicer(common_pb2_grpc.CommonServiceServicer):
                 first_name_list.append(tutor.first_name)
 
         return GetTutorResponse(tutors=response)
+
+    def GetUser(self, request, context):
+        users = get_users()
+
+        response = []
+
+        for first_name, last_name, id, role in users:
+            response.append(
+                User(
+                    first_name=first_name,
+                    last_name=last_name,
+                    role=role,
+                    id=id
+                )
+            )
+
+        return GetUsersResponse(users=response)
 
 
 def serve():

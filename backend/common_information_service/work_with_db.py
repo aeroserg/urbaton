@@ -1,6 +1,6 @@
 from backend.common.models import (School, Class, EducationYear, User, UsersSchool, ClassStudentRelation,
                                    StudentEducationYearRelationship, CourseIndividual, CourseCommon,
-                                   TutorCourseIndividualRelationship, TutorCourseCommonRelationship, app, db)
+                                   TutorCourseIndividualRelationship, TutorCourseCommonRelationship, Role, app, db)
 
 
 def get_schools():
@@ -70,3 +70,11 @@ def get_tutors(login):
             .all()
 
         return users
+
+
+def get_users():
+    with app.app_context():
+        users_info = db.session.query(User.first_name, User.last_name, User.id, Role.role). \
+            join(Role, User.role_id == Role.id).all()
+
+        return users_info

@@ -13,7 +13,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0c\x63ommon.proto\"X\n\x06School\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\r\n\x05\x65mail\x18\x03 \x01(\t\x12\x14\n\x0cphone_number\x18\x04 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x05 \x01(\t\"\x1b\n\x05\x43lass\x12\x12\n\nclass_name\x18\x01 \x01(\t\"\'\n\rEducationYear\x12\x16\n\x0e\x65\x64ucation_year\x18\x01 \x01(\x05\"=\n\x08Students\x12\x12\n\nfirst_name\x18\x01 \x01(\t\x12\x11\n\tlast_name\x18\x02 \x01(\t\x12\n\n\x02id\x18\x03 \x01(\x05\":\n\x07\x43lasses\x12\x12\n\nclass_name\x18\x01 \x01(\t\x12\x1b\n\x08students\x18\x02 \x03(\x0b\x32\t.Students\"9\n\rGradeFullInfo\x12\r\n\x05grade\x18\x01 \x01(\x05\x12\x19\n\x07\x63lasses\x18\x02 \x03(\x0b\x32\x08.Classes\"1\n\x06Grades\x12\'\n\x0fgrade_full_info\x18\x01 \x03(\x0b\x32\x0e.GradeFullInfo\"j\n\x05Tutor\x12\x12\n\nfirst_name\x18\x01 \x01(\t\x12\x11\n\tlast_name\x18\x02 \x01(\t\x12\x1a\n\x12\x63ommon_course_name\x18\x03 \x01(\t\x12\x1e\n\x16individual_course_name\x18\x04 \x01(\t\"\x10\n\x0eSchoolsRequest\"+\n\x0fSchoolsResponse\x12\x18\n\x07schools\x18\x01 \x03(\x0b\x32\x07.School\"\x11\n\x0fGetClassRequest\"+\n\x10GetClassResponse\x12\x17\n\x07\x63lasses\x18\x01 \x03(\x0b\x32\x06.Class\"\x19\n\x17GetEducationYearRequest\"C\n\x18GetEducationYearResponse\x12\'\n\x0f\x65\x64ucation_years\x18\x01 \x03(\x0b\x32\x0e.EducationYear\"#\n\x12GetStudentsRequest\x12\r\n\x05login\x18\x01 \x01(\t\".\n\x13GetStudentsResponse\x12\x17\n\x06grades\x18\x01 \x03(\x0b\x32\x07.Grades\" \n\x0fGetTutorRequest\x12\r\n\x05login\x18\x01 \x01(\t\"*\n\x10GetTutorResponse\x12\x16\n\x06tutors\x18\x01 \x03(\x0b\x32\x06.Tutor2\xa2\x02\n\rCommonService\x12,\n\x07Schools\x12\x0f.SchoolsRequest\x1a\x10.SchoolsResponse\x12/\n\x08GetClass\x12\x10.GetClassRequest\x1a\x11.GetClassResponse\x12G\n\x10GetEducationYear\x12\x18.GetEducationYearRequest\x1a\x19.GetEducationYearResponse\x12\x38\n\x0bGetStudents\x12\x13.GetStudentsRequest\x1a\x14.GetStudentsResponse\x12/\n\x08GetTutor\x12\x10.GetTutorRequest\x1a\x11.GetTutorResponseb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0c\x63ommon.proto\"X\n\x06School\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\r\n\x05\x65mail\x18\x03 \x01(\t\x12\x14\n\x0cphone_number\x18\x04 \x01(\t\x12\x0f\n\x07\x61\x64\x64ress\x18\x05 \x01(\t\"\x1b\n\x05\x43lass\x12\x12\n\nclass_name\x18\x01 \x01(\t\"\'\n\rEducationYear\x12\x16\n\x0e\x65\x64ucation_year\x18\x01 \x01(\x05\"=\n\x08Students\x12\x12\n\nfirst_name\x18\x01 \x01(\t\x12\x11\n\tlast_name\x18\x02 \x01(\t\x12\n\n\x02id\x18\x03 \x01(\x05\":\n\x07\x43lasses\x12\x12\n\nclass_name\x18\x01 \x01(\t\x12\x1b\n\x08students\x18\x02 \x03(\x0b\x32\t.Students\"9\n\rGradeFullInfo\x12\r\n\x05grade\x18\x01 \x01(\x05\x12\x19\n\x07\x63lasses\x18\x02 \x03(\x0b\x32\x08.Classes\"1\n\x06Grades\x12\'\n\x0fgrade_full_info\x18\x01 \x03(\x0b\x32\x0e.GradeFullInfo\"j\n\x05Tutor\x12\x12\n\nfirst_name\x18\x01 \x01(\t\x12\x11\n\tlast_name\x18\x02 \x01(\t\x12\x1a\n\x12\x63ommon_course_name\x18\x03 \x01(\t\x12\x1e\n\x16individual_course_name\x18\x04 \x01(\t\"G\n\x04User\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x12\n\nfirst_name\x18\x02 \x01(\t\x12\x11\n\tlast_name\x18\x03 \x01(\t\x12\x0c\n\x04role\x18\x04 \x01(\t\"\x10\n\x0eSchoolsRequest\"+\n\x0fSchoolsResponse\x12\x18\n\x07schools\x18\x01 \x03(\x0b\x32\x07.School\"\x11\n\x0fGetClassRequest\"+\n\x10GetClassResponse\x12\x17\n\x07\x63lasses\x18\x01 \x03(\x0b\x32\x06.Class\"\x19\n\x17GetEducationYearRequest\"C\n\x18GetEducationYearResponse\x12\'\n\x0f\x65\x64ucation_years\x18\x01 \x03(\x0b\x32\x0e.EducationYear\"#\n\x12GetStudentsRequest\x12\r\n\x05login\x18\x01 \x01(\t\".\n\x13GetStudentsResponse\x12\x17\n\x06grades\x18\x01 \x03(\x0b\x32\x07.Grades\" \n\x0fGetTutorRequest\x12\r\n\x05login\x18\x01 \x01(\t\"*\n\x10GetTutorResponse\x12\x16\n\x06tutors\x18\x01 \x03(\x0b\x32\x06.Tutor\"\x11\n\x0fGetUsersRequest\"(\n\x10GetUsersResponse\x12\x14\n\x05users\x18\x01 \x03(\x0b\x32\x05.User2\xd2\x02\n\rCommonService\x12,\n\x07Schools\x12\x0f.SchoolsRequest\x1a\x10.SchoolsResponse\x12/\n\x08GetClass\x12\x10.GetClassRequest\x1a\x11.GetClassResponse\x12G\n\x10GetEducationYear\x12\x18.GetEducationYearRequest\x1a\x19.GetEducationYearResponse\x12\x38\n\x0bGetStudents\x12\x13.GetStudentsRequest\x1a\x14.GetStudentsResponse\x12/\n\x08GetTutor\x12\x10.GetTutorRequest\x1a\x11.GetTutorResponse\x12.\n\x07GetUser\x12\x10.GetUsersRequest\x1a\x11.GetUsersResponseb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -36,26 +36,32 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _globals['_GRADES']._serialized_end=407
   _globals['_TUTOR']._serialized_start=409
   _globals['_TUTOR']._serialized_end=515
-  _globals['_SCHOOLSREQUEST']._serialized_start=517
-  _globals['_SCHOOLSREQUEST']._serialized_end=533
-  _globals['_SCHOOLSRESPONSE']._serialized_start=535
-  _globals['_SCHOOLSRESPONSE']._serialized_end=578
-  _globals['_GETCLASSREQUEST']._serialized_start=580
-  _globals['_GETCLASSREQUEST']._serialized_end=597
-  _globals['_GETCLASSRESPONSE']._serialized_start=599
-  _globals['_GETCLASSRESPONSE']._serialized_end=642
-  _globals['_GETEDUCATIONYEARREQUEST']._serialized_start=644
-  _globals['_GETEDUCATIONYEARREQUEST']._serialized_end=669
-  _globals['_GETEDUCATIONYEARRESPONSE']._serialized_start=671
-  _globals['_GETEDUCATIONYEARRESPONSE']._serialized_end=738
-  _globals['_GETSTUDENTSREQUEST']._serialized_start=740
-  _globals['_GETSTUDENTSREQUEST']._serialized_end=775
-  _globals['_GETSTUDENTSRESPONSE']._serialized_start=777
-  _globals['_GETSTUDENTSRESPONSE']._serialized_end=823
-  _globals['_GETTUTORREQUEST']._serialized_start=825
-  _globals['_GETTUTORREQUEST']._serialized_end=857
-  _globals['_GETTUTORRESPONSE']._serialized_start=859
-  _globals['_GETTUTORRESPONSE']._serialized_end=901
-  _globals['_COMMONSERVICE']._serialized_start=904
-  _globals['_COMMONSERVICE']._serialized_end=1194
+  _globals['_USER']._serialized_start=517
+  _globals['_USER']._serialized_end=588
+  _globals['_SCHOOLSREQUEST']._serialized_start=590
+  _globals['_SCHOOLSREQUEST']._serialized_end=606
+  _globals['_SCHOOLSRESPONSE']._serialized_start=608
+  _globals['_SCHOOLSRESPONSE']._serialized_end=651
+  _globals['_GETCLASSREQUEST']._serialized_start=653
+  _globals['_GETCLASSREQUEST']._serialized_end=670
+  _globals['_GETCLASSRESPONSE']._serialized_start=672
+  _globals['_GETCLASSRESPONSE']._serialized_end=715
+  _globals['_GETEDUCATIONYEARREQUEST']._serialized_start=717
+  _globals['_GETEDUCATIONYEARREQUEST']._serialized_end=742
+  _globals['_GETEDUCATIONYEARRESPONSE']._serialized_start=744
+  _globals['_GETEDUCATIONYEARRESPONSE']._serialized_end=811
+  _globals['_GETSTUDENTSREQUEST']._serialized_start=813
+  _globals['_GETSTUDENTSREQUEST']._serialized_end=848
+  _globals['_GETSTUDENTSRESPONSE']._serialized_start=850
+  _globals['_GETSTUDENTSRESPONSE']._serialized_end=896
+  _globals['_GETTUTORREQUEST']._serialized_start=898
+  _globals['_GETTUTORREQUEST']._serialized_end=930
+  _globals['_GETTUTORRESPONSE']._serialized_start=932
+  _globals['_GETTUTORRESPONSE']._serialized_end=974
+  _globals['_GETUSERSREQUEST']._serialized_start=976
+  _globals['_GETUSERSREQUEST']._serialized_end=993
+  _globals['_GETUSERSRESPONSE']._serialized_start=995
+  _globals['_GETUSERSRESPONSE']._serialized_end=1035
+  _globals['_COMMONSERVICE']._serialized_start=1038
+  _globals['_COMMONSERVICE']._serialized_end=1376
 # @@protoc_insertion_point(module_scope)

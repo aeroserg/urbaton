@@ -75,6 +75,18 @@ class Tutor(_message.Message):
     individual_course_name: str
     def __init__(self, first_name: _Optional[str] = ..., last_name: _Optional[str] = ..., common_course_name: _Optional[str] = ..., individual_course_name: _Optional[str] = ...) -> None: ...
 
+class User(_message.Message):
+    __slots__ = ["id", "first_name", "last_name", "role"]
+    ID_FIELD_NUMBER: _ClassVar[int]
+    FIRST_NAME_FIELD_NUMBER: _ClassVar[int]
+    LAST_NAME_FIELD_NUMBER: _ClassVar[int]
+    ROLE_FIELD_NUMBER: _ClassVar[int]
+    id: int
+    first_name: str
+    last_name: str
+    role: str
+    def __init__(self, id: _Optional[int] = ..., first_name: _Optional[str] = ..., last_name: _Optional[str] = ..., role: _Optional[str] = ...) -> None: ...
+
 class SchoolsRequest(_message.Message):
     __slots__ = []
     def __init__(self) -> None: ...
@@ -128,3 +140,13 @@ class GetTutorResponse(_message.Message):
     TUTORS_FIELD_NUMBER: _ClassVar[int]
     tutors: _containers.RepeatedCompositeFieldContainer[Tutor]
     def __init__(self, tutors: _Optional[_Iterable[_Union[Tutor, _Mapping]]] = ...) -> None: ...
+
+class GetUsersRequest(_message.Message):
+    __slots__ = []
+    def __init__(self) -> None: ...
+
+class GetUsersResponse(_message.Message):
+    __slots__ = ["users"]
+    USERS_FIELD_NUMBER: _ClassVar[int]
+    users: _containers.RepeatedCompositeFieldContainer[User]
+    def __init__(self, users: _Optional[_Iterable[_Union[User, _Mapping]]] = ...) -> None: ...
