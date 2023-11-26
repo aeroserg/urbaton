@@ -11,6 +11,8 @@ COMMON_SERVICE_HOST = os.getenv("COMMON_SERVICE_HOST")
 COMMON_SERVICE_PORT = os.getenv("COMMON_SERVICE_PORT")
 ORDER_SERVICE_HOST = os.getenv("ORDERS_SERVICE_HOST")
 ORDER_SERVICE_PORT = os.getenv("ORDERS_SERVICE_PORT")
+MESSAGE_SERVICE_HOST = os.getenv("MESSAGE_SERVICE_HOST")
+MESSAGE_SERVICE_PORT = os.getenv("MESSAGE_SERVICE_PORT")
 
 from flask import Flask, request
 from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity, create_access_token
@@ -24,6 +26,8 @@ import common_pb2_grpc
 import orders_pb2
 from orders_pb2 import EducationOrderParent, EducationOrderStudent
 import orders_pb2_grpc
+import message_pb2
+import message_pb2_grpc
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -370,6 +374,54 @@ def get_tutors_for_timetable():
         })
 
     return {"tutors": result}, 200
+
+
+@app.route('/send_message', methods=['POST'])
+@jwt_required()
+def send_message():
+    current_user = get_jwt_identity()
+
+    data = request.get_json()
+
+    id_to = data.get('id_to')
+    text = data.get('text')
+
+    with grpc.insecure_channel(MESSAGE_SERVICE_HOST + ':' + MESSAGE_SERVICE_PORT) as channel:
+        stub = message_pb2_grpc.MessageServiceStub(channel)
+        response = stub.SendMessage(
+            message_pb2.SendMessageRequest(
+                login_from=str(current_user),
+                id_to=int(id_to),
+                text=text
+            ))
+
+    return {"success": response.success}
+
+
+@app.route('/get_messages', methods=['GET'])
+@jwt_required()
+def get_messages():
+    current_user = get_jwt_identity()
+
+    response = {"messages": []}
+
+    with grpc.insecure_channel(MESSAGE_SERVICE_HOST + ':' + MESSAGE_SERVICE_PORT) as channel:
+        stub = message_pb2_grpc.MessageServiceStub(channel)
+        messages = stub.GetMessage(
+            message_pb2.GetMessageRequest(
+                login=str(current_user)
+            ))
+
+    for message in messages.messages:
+        response["messages"].append(
+            {
+                'text': message.text,
+                'sender_first_name': message.first_name_from,
+                'sender_last_name': message.last_name_from
+            }
+        )
+
+    return response, 200
 
 
 if __name__ == '__main__':

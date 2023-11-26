@@ -166,6 +166,14 @@ class StudentMarksCourseCommon(db.Model):
     mark = db.Column(db.Integer, nullable=False)
 
 
+class Message(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    id_from = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    id_to = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    text = db.Column(db.String, nullable=False)
+    delivered = db.Column(db.Boolean, nullable=False, default=False)
+
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()

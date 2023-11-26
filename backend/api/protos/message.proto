@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+message Message{
+  string text = 1;
+  string first_name_from = 2;
+  string last_name_from = 3;
+}
+
+message SendMessageRequest{
+  string text = 1;
+  string login_from = 2;
+  int32 id_to = 3;
+}
+
+message SendMessageResponse{
+  bool success = 1;
+}
+
+message GetMessageRequest{
+  string login = 1;
+}
+
+message GetMessageResponse{
+  repeated Message messages = 1;
+}
+
+service MessageService{
+  rpc SendMessage(SendMessageRequest) returns (SendMessageResponse);
+  rpc GetMessage(GetMessageRequest) returns (GetMessageResponse);
+}

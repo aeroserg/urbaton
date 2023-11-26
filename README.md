@@ -12,6 +12,7 @@
 - auth port: 9003
 - orders: 9004
 - common_information_service port: 9002
+- message_service port: 9005
 
 
 ## схема апи
@@ -317,6 +318,31 @@
             "first_name": "Мэйби",
             "individual_course_name": "Губная гармошка",
             "last_name": "Бэйби"
+        }
+    ]
+}
+
+### отправка письма
+- http://localhost/api/send_message
+- POST
+- data:{
+    "id_to": "2",
+    "text": "сообщение"
+}
+- request:{
+    "success": true
+}
+
+### получение писем
+- http://localhost/api/get_messages
+- GET
+- ОБЯЗАТЕЛЬНО JWT ТОКЕН
+- response:{
+    "messages": [
+        {
+            "sender_first_name": "Виктор",
+            "sender_last_name": "Цой",
+            "text": "тест"
         }
     ]
 }

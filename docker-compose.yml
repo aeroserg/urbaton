@@ -51,6 +51,15 @@ services:
       - ./backend/common:/orders/backend/common
       - .env:/orders/.env
 
+  message:
+    build: backend/message_service/
+    container_name: message
+    ports:
+      - "9005:9005"
+    volumes:
+      - ./backend/common:/message/backend/common
+      - .env:/message/.env
+
   frontend:
     build: frontend/
     container_name: frontend
