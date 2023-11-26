@@ -1,2 +1,5 @@
 .idea
 .env
+.DSStore
+DSStore
+__pycache__

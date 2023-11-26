@@ -7,7 +7,7 @@ a:not([class]) {
   --table-border: #5559FF;
 }
 body {
-  font-family: var(--font-rubik);
+  font-family: var(--font-rubik), serif;
   font-weight: 400;
 }
 .l-section {
@@ -399,14 +399,51 @@ h1, .b_h1 {
   overflow: scroll; */
 }
 .fillInTimeTable {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 5;
-  width: 300px;
-  height: 10;
+  width: 50%;
   padding: 2rem;
-  background-color: #c45c5c;
+  background-color: #ffffff;
   border-radius: 20px;
-  box-shadow: 0 0 0 0;
+  box-shadow: 2px 4px 10px 0px rgba(37, 37, 37, 0.525);
+  margin: 20% auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.modal {
+  backdrop-filter: blur(10px);
+}
+.modal p {
+  margin-bottom: 0;
+  font-size: 30px;
+}
+.modal select {
+  margin: 0 0 1rem 0;
+}
+.close {
+  position: absolute;
+  top: -34%;
+  right: -17%;
+  font-size: 75px;
+}
+
+.item {
+  font-size: 24px;
+  font-weight: 400;
+}
+.itemSub {
+  display: flex;
+}
+.itemLeft {
+  margin-right: 2rem;
+}
+.listItem {
+  padding: 2rem;
+  margin-bottom: 1rem;
+  border: 4px solid #5559FF;
+  border-radius: 20px;
+}
+.itemSubTitle,.itemLeft {
+  font-size: 30px;
+  font-weight: 600;
 }

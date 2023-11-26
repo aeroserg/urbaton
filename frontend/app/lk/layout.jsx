@@ -19,11 +19,11 @@ const rubik = Rubik({
 })
 
 export const metadata = {
-  title: 'Вход в личный кабинет',
-  description: 'Войдите в личный кабинет лучшей школы России',
+  title: 'Личный кабинет',
+  description: 'Личный кабинет лучшей школы России',
 }
 
-export default function Layout({ children }) {
+export default function LkLayout({ children }) {
   return (
     <html lang="ru">
       <body className={`${roboto.variable} ${rubik.variable}`}>{children}</body>
