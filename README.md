@@ -394,3 +394,22 @@
         }
     ]
 }
+
+### получение студентов родителя
+- http://localhost/api/get_parent_students
+- GET
+- ОБЯЗАТЕЛЬНО JWT ТОКЕН
+- response:{
+    "parent_students": [
+        {
+            "first_name": "Сергей",
+            "id": 14,
+            "last_name": "Клосеп"
+        },
+        {
+            "first_name": "Сергей",
+            "id": 15,
+            "last_name": "Анненков"
+        }
+    ]
+}

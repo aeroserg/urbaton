@@ -16,10 +16,11 @@ import grpc
 import common_pb2_grpc
 from common_pb2 import (School, SchoolsResponse, GetClassResponse, Class, GetEducationYearResponse,
                         EducationYear, Grades, GradeFullInfo, Classes, Students, GetStudentsResponse,
-                        Tutor, GetTutorResponse, User, GetUsersResponse, StudentMarks, GetTutorsStudentResponse)
+                        Tutor, GetTutorResponse, User, GetUsersResponse, StudentMarks, GetTutorsStudentResponse,
+                        GetParentStudentResponse)
 
 from work_with_db import (get_schools, get_classes, get_education_years, get_students, get_tutors,
-                          get_users, get_tutors_student, get_user)
+                          get_users, get_tutors_student, get_user, get_parents_student)
 
 
 class CommonServiceServicer(common_pb2_grpc.CommonServiceServicer):
@@ -158,6 +159,23 @@ class CommonServiceServicer(common_pb2_grpc.CommonServiceServicer):
             )
 
         return GetTutorsStudentResponse(student_marks=response)
+
+    def GetParentStudent(self, request, context):
+        login = request.login
+
+        parent = get_user(login=login)
+        children = get_parents_student(parent_id=parent.id)
+
+        result = []
+        for first_name, last_name, user_id in children:
+            result.append(
+                Students(
+                    first_name=first_name,
+                    last_name=last_name,
+                    id=user_id
+                ))
+
+        return GetParentStudentResponse(students=result)
 
 
 def serve():

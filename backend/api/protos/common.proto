@@ -105,6 +105,16 @@ message GetTutorsStudentResponse{
   repeated StudentMarks student_marks = 1;
 }
 
+message GetParentStudentRequest
+{
+  string login = 1;
+}
+
+message GetParentStudentResponse
+{
+  repeated Students students = 1;
+}
+
 service CommonService{
   rpc Schools(SchoolsRequest) returns (SchoolsResponse);
   rpc GetClass(GetClassRequest) returns (GetClassResponse);
@@ -113,4 +123,5 @@ service CommonService{
   rpc GetTutor(GetTutorRequest) returns (GetTutorResponse);
   rpc GetUser(GetUsersRequest) returns (GetUsersResponse);
   rpc GetTutorsStudent(GetTutorsStudentRequest) returns (GetTutorsStudentResponse);
+  rpc GetParentStudent(GetParentStudentRequest) returns (GetParentStudentResponse);
 }

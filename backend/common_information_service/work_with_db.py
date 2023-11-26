@@ -1,7 +1,8 @@
 from backend.common.models import (School, Class, EducationYear, User, UsersSchool, ClassStudentRelation,
                                    StudentEducationYearRelationship, CourseIndividual, CourseCommon,
                                    TutorCourseIndividualRelationship, TutorCourseCommonRelationship, Role,
-                                   StudentsCourseIndividual, StudentMarksCourseIndividual, app, db)
+                                   StudentsCourseIndividual, StudentMarksCourseIndividual,
+                                   ParentStudentRelationship, app, db)
 
 
 def get_schools():
@@ -113,3 +114,12 @@ def get_user(login):
     with app.app_context():
         user = User.query.filter_by(login=login).first()
         return user
+
+
+def get_parents_student(parent_id):
+    with app.app_context():
+        linked_users = db.session.query(User.first_name, User.last_name, User.id). \
+            join(ParentStudentRelationship, User.id == ParentStudentRelationship.student_id). \
+            filter(ParentStudentRelationship.parent_id == parent_id).all()
+
+        return linked_users

@@ -467,5 +467,31 @@ def get_tutor_students():
     return response, 200
 
 
+@app.route('/get_parent_students', methods=['GET'])
+@jwt_required()
+def get_parent_students():
+    current_user = get_jwt_identity()
+
+    response = {"parent_students": []}
+
+    with grpc.insecure_channel(COMMON_SERVICE_HOST + ':' + COMMON_SERVICE_PORT) as channel:
+        stub = common_pb2_grpc.CommonServiceStub(channel)
+        parent_students = stub.GetParentStudent(
+            common_pb2.GetParentStudentRequest(
+                login=str(current_user)
+            ))
+
+    for student in parent_students.students:
+        response["parent_students"].append(
+            {
+                'first_name': student.first_name,
+                'last_name': student.last_name,
+                'id': student.id
+             }
+        )
+
+    return response, 200
+
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=9000)

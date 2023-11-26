@@ -174,3 +174,15 @@ class GetTutorsStudentResponse(_message.Message):
     STUDENT_MARKS_FIELD_NUMBER: _ClassVar[int]
     student_marks: _containers.RepeatedCompositeFieldContainer[StudentMarks]
     def __init__(self, student_marks: _Optional[_Iterable[_Union[StudentMarks, _Mapping]]] = ...) -> None: ...
+
+class GetParentStudentRequest(_message.Message):
+    __slots__ = ["login"]
+    LOGIN_FIELD_NUMBER: _ClassVar[int]
+    login: str
+    def __init__(self, login: _Optional[str] = ...) -> None: ...
+
+class GetParentStudentResponse(_message.Message):
+    __slots__ = ["students"]
+    STUDENTS_FIELD_NUMBER: _ClassVar[int]
+    students: _containers.RepeatedCompositeFieldContainer[Students]
+    def __init__(self, students: _Optional[_Iterable[_Union[Students, _Mapping]]] = ...) -> None: ...
